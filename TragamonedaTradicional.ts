@@ -4,7 +4,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
     private cantidadFilas: number=3;
     private cantidadColumnas: number=3;
     private tipoDeJuego: string = "Tradicional";
-    constructor(pCantidadFilas: number, pCantidadColumnas: number, pNombre_juego: string,  pTipoDeJuego: string, pSaldo: number) {
+    constructor(pCantidadFilas: number, pCantidadColumnas: number, pNombre_juego: string,  pTipoDeJuego: string, pSaldo: number, pApuestaMaxima: number, pApuestaMinima: number) {
     
         super(pNombre_juego, pSaldo);
         this.cantidadFilas = pCantidadFilas;

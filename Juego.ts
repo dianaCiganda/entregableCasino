@@ -3,11 +3,16 @@ export abstract class Juego {
     protected nombre_juego: string;
     private apuestaMax: number = 1000;
     private apuestaMin: number = 100;
-    private saldo:number;
+  
 
-    constructor(pNombre_juego: string, pSaldo: number) {
+    constructor(pNombre_juego: string, pSaldo: number, apuestaMax?: number, apuestaMin?: number) {
         this.nombre_juego = pNombre_juego;
-        this.saldo = pSaldo;
+        if (apuestaMax) {
+            this.apuestaMax = apuestaMax;
+        }
+        if (apuestaMin) {
+            this.apuestaMin = apuestaMin;
+        }
        
     }
     getNombreJuego(): string {
@@ -21,8 +26,6 @@ export abstract class Juego {
     public mostrarReglasGenerales(): string{
         return""
     }
-
-    abstract cargarSaldo(): void;
     abstract ComenzarJuego(): void  
    
 }

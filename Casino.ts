@@ -13,6 +13,7 @@ export class Casino{
     private cajero: string= "Paolo Gomez";
     private usuario: string= "Alfonsina Storni";
     private juegos:  Juego[];
+    private saldo: number = 0;
 
     constructor(pNombre: string, pCajero: string,pJuegos: Juego[], pusuario: string) {
         this.nombre= pNombre;
@@ -46,6 +47,9 @@ public menuOpciones(): void{
                         return false
                     }                
                 }
+                public cargarSaldo(pSaldo:number): number{
+       return  this.saldo += pSaldo;
+    }
 }
 
 
