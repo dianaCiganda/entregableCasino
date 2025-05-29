@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "@types/readline-sync": "^1.4.8"
+  },
+  "dependencies": {
+    "dayjs": "^1.11.13",
+    "readline-sync": "^1.4.10"
+  }
+}
