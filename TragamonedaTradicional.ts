@@ -24,7 +24,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
     cargarSaldo(): void {
         throw new Error('Method not implemented.');
     }
-    ComenzarJuego(): void {
+    comenzarJuego(): void {
         throw new Error('Method not implemented.');
     }
     public girar(): void {

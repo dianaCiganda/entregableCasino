@@ -26,7 +26,7 @@ export class Bingo extends Juego{
     cargarSaldo(): void {
         throw new Error("Method not implemented.");
     }
-    ComenzarJuego(): void {
+    comenzarJuego(): void {
         throw new Error("Method not implemented.");
     }
 }
