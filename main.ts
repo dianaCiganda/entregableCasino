@@ -18,58 +18,63 @@ function obtenerHoraActual(): number {
 let horaActual = obtenerHoraActual();
 let salir = "";
 let edad = 0;
+let saldo = 0;
+
+
+const bingo_1 = new Bingo(5, "Bingo Estelar", 100, 10, saldo);
+const raspadita_1 = new Raspadita(333, 500, false, "Raspadita Gold", saldo);
+
+const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
+const fabricaTragamonedas = new TragamonedaFactory();
+
+const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
+    cantidadFilas: 3,
+    cantidadColumnas: 3,
+    nombre_juego: "Tragamoneda Clásica",
+    subirApuesta: 100,
+    bajarApuesta: 10,
+    saldo: 1000,
+    apuestaMaxima: 500,
+    apuestaMinima: 50,
+    tipoDeJuego: "Tradicional"
+});
+
+const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
+    cantidadFilas: 4,
+    cantidadColumnas: 4,
+    nombre_juego: "Tragamoneda Estrella Azul",
+    subirApuesta: 100,
+    bajarApuesta: 10,
+    saldo: 1000,
+    apuestaMaxima: 500,
+    apuestaMinima: 50,
+    tipoDeJuego: "Moderno"
+});
+
+
+casino_1.agregarJuego(bingo_1);
+casino_1.agregarJuego(myTragamoneda1);
+casino_1.agregarJuego(myTragamoneda2);
+casino_1.agregarJuego(raspadita_1);
 
 while (edad < 18 || edad > 99) {
     edad = rs.questionInt("Ingrese su edad: ");
 }
 
 if (edad >= 18 && edad <= 99) {
-    const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
     casino_1.usuarioRandom();
     casino_1.mostrarMensaje();
 
     if (!casino_1.estaCerrado(horaActual)) {
         console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
 
-        const fabricaTragamonedas = new TragamonedaFactory();
 
-        const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
-            cantidadFilas: 3,
-            cantidadColumnas: 3,
-            nombre_juego: "Tragamoneda Clásica",
-            subirApuesta: 100,
-            bajarApuesta: 10,
-            saldo: 1000,
-            apuestaMaxima: 500,
-            apuestaMinima: 50,
-            tipoDeJuego: "Tradicional"
-        });
-
-        const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
-            cantidadFilas: 4,
-            cantidadColumnas: 4,
-            nombre_juego: "Tragamoneda Estrella Azul",
-            subirApuesta: 100,
-            bajarApuesta: 10,
-            saldo: 1000,
-            apuestaMaxima: 500,
-            apuestaMinima: 50,
-            tipoDeJuego: "Moderno"
-        });
-
-        let saldo = 0;
         while (saldo < 1000) {
             console.log("El saldo debe ser mayor o igual a $1000");
             saldo = rs.questionInt("Ingrese el saldo que desea cargar: ");
         }
 
-        const bingo_1 = new Bingo(5, "Bingo Estelar", 100, 10, saldo);
-        const raspadita_1 = new Raspadita(333, 500, false, "Raspadita Gold", saldo);
 
-        casino_1.agregarJuego(bingo_1);
-        casino_1.agregarJuego(myTragamoneda1);
-        casino_1.agregarJuego(myTragamoneda2);
-        casino_1.agregarJuego(raspadita_1);
 
         while (salir !== "X") {
             salir = rs.question("Presione 'X' para salir o cualquier otra tecla para continuar: ").toUpperCase();
@@ -89,45 +94,73 @@ if (edad >= 18 && edad <= 99) {
                 switch (opcion) {
                     case 1:
                         console.log(`Usted ha seleccionado el juego: ${bingo_1.getNombreJuego()}`);
-                        // Aquí podrías implementar llamada a método para jugar bingo
+                        while (saldo >= 1000) {
+
+                            console.log("¡Bingo jugado! (simulado)");
+
+                            const respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
+                            if (respuesta === "M") break;
+                            if (respuesta === "X") {
+                                salir = "X";
+                                break;
+                            }
+                        }
                         break;
 
                     case 2:
                         console.log(`Usted ha seleccionado el juego: ${myTragamoneda1.getNombreJuego()}`);
-                        // Llamada al método de jugar tragamoneda 1
+                        while (saldo >= 1000) {
+
+
+                            const respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
+                            if (respuesta === "M") break;
+                            if (respuesta === "X") {
+                                salir = "X";
+                                break;
+                            }
+                        }
                         break;
 
                     case 3:
                         console.log(`Usted ha seleccionado el juego: ${myTragamoneda2.getNombreJuego()}`);
-                        // Llamada al método de jugar tragamoneda 2
-                        break;
+                        while (saldo >= 1000) {
 
-                    case 4:
-                        console.log(`Usted ha seleccionado: ${raspadita_1.getNombreJuego()}`);
-                        while (raspadita_1.getSaldo() >= 500 && salir !== "X") {
-                            console.log(`Saldo actual: $${raspadita_1.getSaldo()}`);
-                           saldo = raspadita_1.comenzarJuego();
-                           console.log("saldo: ", saldo);
-                           
 
-                            if (saldo < 500) {
-                                console.log("Saldo insuficiente para jugar otra vez.");
+                            const respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
+                            if (respuesta === "M") break;
+                            if (respuesta === "X") {
+                                salir = "X";
                                 break;
                             }
-
-                            salir = rs.question("¿Desea seguir jugando Raspadita? Presione 'X' para salir o cualquier otra tecla para continuar: ").toUpperCase();
                         }
                         break;
-                }
-            } else {
-                console.log("Operación cancelada. Saliendo del casino.");
-            }
+
+                   case 4:
+    console.log(`Usted ha seleccionado: ${raspadita_1.getNombreJuego()}`);
+    raspadita_1.setSaldo(saldo); 
+    while (raspadita_1.getSaldo() >= 500) {
+        console.log(`Saldo actual: $${raspadita_1.getSaldo()}`);
+        raspadita_1.comenzarJuego(); // Modifica el saldo interno
+        console.log("Saldo actualizado:", raspadita_1.getSaldo());
+
+        if (raspadita_1.getSaldo() < 500) {
+            console.log("Saldo insuficiente para jugar otra vez.");
+            break;
         }
 
-    } else {
-        console.log(`El casino está cerrado, la hora actual es: ${horaActual}`);
+        const respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
+        if (respuesta === "M") break;
+        if (respuesta === "X") {
+            salir = "X";
+            break;
+        }
     }
+    break;
+                }
+            }
 
-} else {
-    console.log("Lo sentimos, debes ser mayor de 18 años para ingresar al casino.");
+        }
+        console.log(`Gracias por jugar a Casino: ${casino_1.getNombre()}`);
+
+    }
 }

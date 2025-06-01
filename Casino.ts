@@ -10,8 +10,8 @@ import * as rs from 'readline-sync';
 //esta extension: Emoji Snippets
 import { Juego } from "./Juego";
 export class Casino {
-    private nombre: string = "Corona de Ases";
-    private cajero: string = "Paolo Gomez";
+    private nombre: string = "";
+    private cajero: string = "";
     private juegos: Juego[];
    
 
@@ -84,6 +84,9 @@ export class Casino {
             console.log("❌ Usuario o contraseña incorrectos.");
         }
 
+    }
+    getNombre():string{
+        return this.nombre;
     }
 }
 

@@ -159,5 +159,9 @@ export class Raspadita extends Juego {
 
     
     }
+    setSaldo(nuevoSaldo:number):void{
+        this.saldo=nuevoSaldo;
+
+    }
 }
 
