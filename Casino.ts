@@ -18,7 +18,6 @@ export class Casino {
     constructor(pNombre: string, pCajero: string, pJuegos: Juego[]) {
         this.nombre = pNombre;
         this.cajero = pCajero;
-
         this.juegos = pJuegos;
     }
 
@@ -40,58 +39,20 @@ export class Casino {
     };
 
     public estaCerrado(pHoraActual: number): boolean {
-        if (pHoraActual <9  || pHoraActual > 24) {
+        if (pHoraActual < 9 || pHoraActual > 24) {
             return true
         }
         else {
             return false
         }
     }
+   
 
-
-    usuarioRandom(): void {
-
-        // Generar un usuario y contraseña aleatorios
-        const usuario = "user_" + Math.floor(Math.random() * 1000);
-        // Math.random() genera un número decimal aleatorio entre 0 (inclusive) y 1 (exclusivo), por ejemplo: 0.4567.
-        // Math.random() * 1000 multiplica ese número por 1000, dándote un número entre 0 y 999.999...
-        // Math.floor(...) redondea hacia abajo al entero más cercano (por ejemplo, 456.789 → 456).
-        //Se concatena con el string "user_", por lo tanto se obtiene un nombre como: "user_456".
-        const contraseña = Math.random().toString(36).substring(2, 8);
-        // Paso 1: Generar un número aleatorio entre 0 y 1
-        // Paso 2: Convertir ese número a una cadena en base 36 (usa números y letras minúsculas)
-        // Paso 3: Quitar los primeros dos caracteres ("0.") para quedarnos solo con los aleatorios
-        // Paso 4: Tomar los primeros 6 caracteres de la cadena para formar la contraseña
-
-
-
-
-        // Mostrar el usuario y contraseña (solo para pruebas)
-        console.log("===Ingrese estos datos===");
-        console.log("Usuario:", usuario);
-        console.log("Contraseña:", contraseña);
-        console.log("-----------------------------");
-
-        let inputUsuario: string = "";
-        let inputContraseña: string = "";
-        // Pedir al usuario que ingrese sus datos
-
-        // Verificar si coinciden
-        while (inputUsuario !== usuario && inputContraseña !== contraseña) {
-            inputUsuario = rs.question("Ingrese su nombre de usuario: ");
-            inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
-
-            if (inputUsuario === usuario && inputContraseña === contraseña) {
-    
-                console.log("✅ Acceso concedido");
-            } else {
-                console.log("❌ Usuario o contraseña incorrectos.");
-            }
-        }
-    }
+   
     getNombre(): string {
         return this.nombre;
     }
+  
 }
 
 

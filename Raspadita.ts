@@ -1,5 +1,6 @@
 import { Juego } from "./Juego";
 import * as rs from 'readline-sync';
+import { Usuario } from "./Usuario";
 export class Raspadita extends Juego {
     private nroSerie: number;
     private numeroMatriz: number;
@@ -49,13 +50,14 @@ export class Raspadita extends Juego {
         console.log("saldo");
 
     }
-
-   comenzarJuego(): number { 
-    if (this.getSaldo() >= this.costoPorboleto) {
+     
+//preguntar porque no toma el tipo Usuario
+   comenzarJuego(user:any): number { 
+    if (user.getSaldo() >= this.costoPorboleto) {
         console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
 
         const descuento = this.cobrar();
-        this.actualizarSaldo(-descuento); // descontar costo del boleto
+        user.actualizarSaldo(-descuento); // descontar costo del boleto
         this.mostrarCarton();
 
         this.numeroMatriz = -1;
@@ -64,13 +66,13 @@ export class Raspadita extends Juego {
         }
 
         console.log(`Usted eligió el número ${this.numeroMatriz}`);
-        this.mostrarCartonRaspado();
+        this.mostrarCartonRaspado(user);
 
     } else {
         console.log("Saldo insuficiente para jugar.");
     }
 
-    return this.getSaldo();  // retorno de saldo actualizado
+    return user.getSaldo();  // retorno de saldo actualizado
 }
     public mostrarCarton(): void {
         for (let i = 0; i < this.matriz.length; i++) {
@@ -81,7 +83,7 @@ export class Raspadita extends Juego {
             }
         }
     }
-    public mostrarCartonRaspado():number {
+    public mostrarCartonRaspado(user:Usuario):number {
         // creamos un arreglo vacio para almacenar los emoticones aleatorios
         const emojis: string[] = [];
         while (emojis.length < 3) {
@@ -128,7 +130,7 @@ export class Raspadita extends Juego {
         if (emojis.includes(valorElegido)) {//devuelve true si esta incluido
             console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${valorElegido}`);
             const premio: number = this.pagar();
-            this.actualizarSaldo(premio); // actualiza saldo al ganar
+            user.actualizarSaldo(premio); // actualiza saldo al ganar
 
         } else {
 
@@ -155,13 +157,11 @@ export class Raspadita extends Juego {
 
             }
         }
-        return this.getSaldo();// retorna el saldo con el descuento del cartón
+        return user.getSaldo();// retorna el saldo con el descuento del cartón
 
     
     }
-    setSaldo(nuevoSaldo:number):void{
-        this.saldo=nuevoSaldo;
-
-    }
+   
+   
 }
 
