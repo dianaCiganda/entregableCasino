@@ -13,7 +13,7 @@ export class Casino {
     private nombre: string = "";
     private cajero: string = "";
     private juegos: Juego[];
-   
+
 
     constructor(pNombre: string, pCajero: string, pJuegos: Juego[]) {
         this.nombre = pNombre;
@@ -40,15 +40,15 @@ export class Casino {
     };
 
     public estaCerrado(pHoraActual: number): boolean {
-        if (pHoraActual < 9 && pHoraActual > 24) {
+        if (pHoraActual <9  || pHoraActual > 24) {
             return true
         }
         else {
             return false
         }
     }
-    
-    
+
+
     usuarioRandom(): void {
 
         // Generar un usuario y contraseña aleatorios
@@ -72,20 +72,24 @@ export class Casino {
         console.log("Contraseña:", contraseña);
         console.log("-----------------------------");
 
-
+        let inputUsuario: string = "";
+        let inputContraseña: string = "";
         // Pedir al usuario que ingrese sus datos
-        const inputUsuario = rs.question("Ingrese su nombre de usuario: ");
-        const inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
 
         // Verificar si coinciden
-        if (inputUsuario === usuario && inputContraseña === contraseña) {
-            console.log("✅ Acceso concedido");
-        } else {
-            console.log("❌ Usuario o contraseña incorrectos.");
-        }
+        while (inputUsuario !== usuario && inputContraseña !== contraseña) {
+            inputUsuario = rs.question("Ingrese su nombre de usuario: ");
+            inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
 
+            if (inputUsuario === usuario && inputContraseña === contraseña) {
+    
+                console.log("✅ Acceso concedido");
+            } else {
+                console.log("❌ Usuario o contraseña incorrectos.");
+            }
+        }
     }
-    getNombre():string{
+    getNombre(): string {
         return this.nombre;
     }
 }
