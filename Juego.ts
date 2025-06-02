@@ -22,7 +22,7 @@ export abstract class Juego {
 
     abstract pagar(saldo:number): number;
 
-    abstract resultadoDelJuego(saldo:number): void;
+    abstract resultadoDelJuego(pvalor:string): void;
     public mostrarReglasGenerales(): string{
         return""
     }

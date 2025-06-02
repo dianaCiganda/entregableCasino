@@ -23,7 +23,7 @@ let saldo = 0;//de inicio 0 para que ingrese al while de verificar saldo mayor o
 
 
 const bingo_1 = new Bingo(5, "Bingo Estelar", 100, 10, saldo);
-const raspadita_1 = new Raspadita(333, 500, false, "Raspadita Gold", saldo);
+const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
 
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
 const fabricaTragamonedas = new TragamonedaFactory();

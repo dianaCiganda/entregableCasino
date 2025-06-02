@@ -18,7 +18,7 @@ export class Usuario extends Casino {
 
         while (this.saldo < 1000) {
             console.log("El saldo debe ser mayor o igual a $1000");
-            this.saldo = this.saldo+rs.questionInt("Ingrese el saldo que desea cargar: ");
+            this.saldo =rs.questionInt("Ingrese el saldo que desea cargar: ");
         }
         return this.saldo;
 

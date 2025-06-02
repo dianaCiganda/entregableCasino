@@ -2,31 +2,17 @@ import { Juego } from "./Juego";
 import * as rs from 'readline-sync';
 import { Usuario } from "./Usuario";
 export class Raspadita extends Juego {
-    private nroSerie: number;
     private numeroMatriz: number;
     private costoPorboleto: number = 500;
-    private estaRaspado: boolean;
     private simbolos: string[] = ["😀", "😅", "😊", "😎", "🥰", "🤔"];
     private matriz: number[][] = [
         [1, 2, 3],
         [4, 5, 6],
         [7, 8, 9]
     ];
-
-    private areasAraspar = {
-        id: 0,
-        estaRaspado: false,
-        matriz: [
-            [1, 2, 3],
-            [4, 5, 6],
-            [7, 8, 9]
-        ]
-    }
-    constructor(pNroSerie: number, pCostoPorboleto: number, pEstaRaspado: boolean, pNombre_juego: string, pSaldo: number, pSimbolos?: string[], pMatriz?: number[][], pNumeroMatriz?:number) {
+    constructor(pCostoPorboleto: number, pNombre_juego: string, pSaldo: number, pSimbolos?: string[], pMatriz?: number[][], pNumeroMatriz?: number) {
         super(pNombre_juego, pSaldo);
-        this.nroSerie = pNroSerie;
         this.costoPorboleto = pCostoPorboleto;
-        this.estaRaspado = pEstaRaspado;
         this.matriz = pMatriz || this.matriz;
         this.simbolos = pSimbolos || this.simbolos;
         this.numeroMatriz = pNumeroMatriz || 0;
@@ -39,41 +25,32 @@ export class Raspadita extends Juego {
         let pago: number = this.costoPorboleto * 4;
         return pago
     }
-
-
-
-    resultadoDelJuego(saldo: number): void {
-        console.log(`usted gana y su saldo se actualiza a}`)
-
+    resultadoDelJuego(pValor:string): void {
+        console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${pValor}`);
     }
-    cargarSaldo(): void {
-        console.log("saldo");
+    //preguntar porque no toma el tipo Usuario
+    comenzarJuego(user: any): number {
+        if (user.getSaldo() >= this.costoPorboleto) {
+            console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
 
-    }
-     
-//preguntar porque no toma el tipo Usuario
-   comenzarJuego(user:any): number { 
-    if (user.getSaldo() >= this.costoPorboleto) {
-        console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
+            const descuento = this.cobrar();
+            user.actualizarSaldo(-descuento); // descontar costo del boleto
+            this.mostrarCarton();
 
-        const descuento = this.cobrar();
-        user.actualizarSaldo(-descuento); // descontar costo del boleto
-        this.mostrarCarton();
+            this.numeroMatriz = -1;
+            while (this.numeroMatriz < 1 || this.numeroMatriz > 9) {
+                this.numeroMatriz = rs.questionInt("Ingrese el número a raspar (1-9): ");
+            }
 
-        this.numeroMatriz = -1;
-        while (this.numeroMatriz < 1 || this.numeroMatriz > 9) {
-            this.numeroMatriz = rs.questionInt("Ingrese el número a raspar (1-9): ");
+            console.log(`Usted eligió el número ${this.numeroMatriz}`);
+            this.mostrarCartonRaspado(user);
+
+        } else {
+            console.log("Saldo insuficiente para jugar.");
         }
 
-        console.log(`Usted eligió el número ${this.numeroMatriz}`);
-        this.mostrarCartonRaspado(user);
-
-    } else {
-        console.log("Saldo insuficiente para jugar.");
+        return user.getSaldo();  // retorno de saldo actualizado
     }
-
-    return user.getSaldo();  // retorno de saldo actualizado
-}
     public mostrarCarton(): void {
         for (let i = 0; i < this.matriz.length; i++) {
             let fila = this.matriz[i].map(val => ` ${val} `).join("|");
@@ -83,7 +60,7 @@ export class Raspadita extends Juego {
             }
         }
     }
-    public mostrarCartonRaspado(user:Usuario):number {
+    public mostrarCartonRaspado(user: Usuario): number {
         // creamos un arreglo vacio para almacenar los emoticones aleatorios
         const emojis: string[] = [];
         while (emojis.length < 3) {
@@ -128,7 +105,7 @@ export class Raspadita extends Juego {
         // si seleccionados que son los emojis coincide el valor elegido, gana
         const valorElegido = contenido[this.numeroMatriz - 1];//le resto uno al numero ingresado para trabajar en posiciones
         if (emojis.includes(valorElegido)) {//devuelve true si esta incluido
-            console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${valorElegido}`);
+            this.resultadoDelJuego(valorElegido);
             const premio: number = this.pagar();
             user.actualizarSaldo(premio); // actualiza saldo al ganar
 
@@ -159,9 +136,9 @@ export class Raspadita extends Juego {
         }
         return user.getSaldo();// retorna el saldo con el descuento del cartón
 
-    
+
     }
-   
-   
+
+
 }
 
