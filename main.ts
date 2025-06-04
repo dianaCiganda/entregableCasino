@@ -20,9 +20,9 @@ let horaActual = obtenerHoraActual();
 let salir = "";
 let edad = 0;
 let saldo = 0;//de inicio 0 para que ingrese al while de verificar saldo mayor o igual a 1000
+  let nuevoSaldo=0;
 
-
-const bingo_1 = new Bingo(5, "Bingo Estelar", 100, 10, saldo);
+const bingo_1 = new Bingo(3, "Bingo Estelar",saldo, 100)
 const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
 
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
@@ -102,9 +102,29 @@ while (edad < 18 || edad > 99) {
 
             switch (opcion) {
                 case 1:
+                nuevoSaldo=0;
                     console.log(`${bingo_1.getNombreJuego()}`);
-                    while (saldo >= 1000) {
+                    user.setSaldo(saldo);
+                    saldo =user.getSaldo();
 
+                    while (user.getSaldo() >= 100) {
+                       console.log(`Saldo actual: ${user.getSaldo()}`);
+                        bingo_1.comenzarJuego(user);
+                        console.log("Saldo actualizado:", user.getSaldo());
+
+                        if (user.getSaldo() <100) {
+                            console.log("Saldo insuficiente para jugar otra vez.");
+
+                        nuevoSaldo = preguntarYRecargarSaldo();
+                        console.log("nuevo saldo", nuevoSaldo);
+                        
+                            if (nuevoSaldo > 0) {
+                                saldo = nuevoSaldo; 
+                                user.setSaldo(saldo); 
+                            } else {
+                                break; 
+                            }
+                        }
 
                         const respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
                         if (respuesta === "M") break;
@@ -113,6 +133,7 @@ while (edad < 18 || edad > 99) {
                             break;
                         }
                     }
+                    saldo =  user.getSaldo();
                     break;
 
                 case 2:
@@ -144,7 +165,7 @@ while (edad < 18 || edad > 99) {
                     break;
 
                 case 4:
-                    let nuevoSaldo=0;
+                    nuevoSaldo=0;
                     console.log(`${raspadita_1.getNombreJuego()}`);
                     user.setSaldo(saldo);
                     saldo =user.getSaldo();
