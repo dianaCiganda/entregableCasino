@@ -35,14 +35,6 @@ public actualizarSaldo(monto: number): number {
         this.saldo=nuevoSaldo;
 
     }
-
-
-
-
-
-
-
-
     usuarioRandom(): void {
 
         // Generar un usuario y contraseña aleatorios
@@ -70,17 +62,23 @@ public actualizarSaldo(monto: number): number {
         let inputContraseña: string = "";
         // Pedir al usuario que ingrese sus datos
 
-        // Verificar si coinciden
-        while (inputUsuario !== this.usuario && inputContraseña !== this.contrasenia) {
+        while (inputUsuario != this.usuario || inputContraseña != this.contrasenia) {
             inputUsuario = rs.question("Ingrese su nombre de usuario: ");
             inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
-
-            if (inputUsuario === this.usuario && inputContraseña === this.contrasenia) {
-
-                console.log("✅ Acceso concedido");
-            } else {
-                console.log("❌ Usuario o contraseña incorrectos.");
+            
+            if(inputUsuario != this.usuario){
+                console.log("Usuario incorrecto vuelva a ingresar los datos");
+    
+            }else if( inputContraseña != this.contrasenia){
+    
+                console.log("contraseña incorrecta vuelva a ingresar los datos");
+            }
+            if (inputUsuario == this.usuario && inputContraseña == this.contrasenia) {
+                
+                console.log("Acceso concedido");
+                
             }
         }
+        
     }
 }

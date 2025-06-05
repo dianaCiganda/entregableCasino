@@ -1,18 +1,10 @@
-import{Casino} from "./Casino.js";
 export abstract class Juego {
     protected nombre_juego: string;
-    private apuestaMax: number = 1000;
-    private apuestaMin: number = 100;
+  
   
 
-    constructor(pNombre_juego: string, apuestaMax?: number, apuestaMin?: number) {
+    constructor(pNombre_juego: string) {
         this.nombre_juego = pNombre_juego;
-        if (apuestaMax) {
-            this.apuestaMax = apuestaMax;
-        }
-        if (apuestaMin) {
-            this.apuestaMin = apuestaMin;
-        }
        
     }
     getNombreJuego(): string {
@@ -23,9 +15,7 @@ export abstract class Juego {
     abstract pagar(saldo:number): number;
 
     abstract resultadoDelJuego(pvalor:string): void;
-    public mostrarReglasGenerales(): string{
-        return""
-    }
+   
     
     abstract comenzarJuego(saldo:number): void  
 

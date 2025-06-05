@@ -1,6 +1,4 @@
 import { Juego } from "./Juego";
-import { Usuario } from "./Usuario";
-
 export class Bingo extends Juego {
   private carton1: string[][];
   private carton2: string[][];
@@ -24,7 +22,7 @@ export class Bingo extends Juego {
     pCartonEnJuego?: string[][],
     pNumerosCantados?: number[]
   ) {
-    super(pNombre_juego, pSaldo);
+    super(pNombre_juego);
     this.cantidadCartones = pCantidadCartones;
     this.costoPorBolilla = pCostoPorBolilla;
     this.pozoAcumulado = pPozoAcumulado || this.pozoAcumulado;
@@ -32,7 +30,7 @@ export class Bingo extends Juego {
     this.numerosCantados = pNumerosCantados || this.numerosCantados;
 
 
-    // Cartones por defecto si no se pasan
+    // Cartones por defecto si no se pasan por parámetros
     this.carton1 = pCarton1 || [
       [' 5', '*', '23', '*', '*', '55', '*', '*', '81'],
       ['*', '17', '*', '*', '40', '*', '*', '75', '*'],
@@ -156,6 +154,8 @@ export class Bingo extends Juego {
     }
     for (const fila of carton) {
       console.log("| " + fila.map(x => x.padStart(2)).join(" | ") + " |");
+      //padStart(2) agrega espacios al principio de x si tiene menos de 2 caracteres
+      //.join(" | ") Une los elementos del array usando " | " como separador.
     }
   }
 }

@@ -1,13 +1,3 @@
-import * as rs from 'readline-sync';
-// import logSymbols from 'log-symbols';
-// import emoji from 'node-emoji';
-//instalar libreria para emoticones
-//npm install log-symbols
-//console.log(logSymbols.success, 'Operación exitosa');     //✅
-//console.log(logSymbols.info, 'Información útil');         // ℹ
-//console.log(logSymbols.warning, 'Advertencia');           // ⚠
-//console.log(logSymbols.error, 'Error grave');             // ✖
-//esta extension: Emoji Snippets
 import { Juego } from "./Juego";
 export class Casino {
     private nombre: string = "";
@@ -20,13 +10,12 @@ export class Casino {
         this.cajero = pCajero;
         this.juegos = pJuegos;
     }
-
+//bienvenida
     public mostrarMensaje(): void {
 
         console.log(`Bienvenido al Casino ${this.nombre} "🎰"\n su cajero es ${this.cajero} `);
-        //hacer getters y setters de los atributos
-
     };
+    //menu para las opciones sin necesidad de console.log por si el proyecto crece, lista los juegos
     public menuOpciones(): void {
         for (let i = 0; i < this.juegos.length; i++) {
             console.log(`${i + 1}. ${this.juegos[i].getNombreJuego()}`);
@@ -34,10 +23,11 @@ export class Casino {
     }
 
     public agregarJuego(juego: any): void {
-        this.juegos.push(juego)//En el main vamos a llamar a este metodo y le vamos a pasar por parametro los juegos creados
+        this.juegos.push(juego)
+//En el main vamos a llamar a este metodo y le vamos a pasar por parametro los juegos creados para llenar el array
 
     };
-
+//método que retorna si el casino esta cerrado con un boolean
     public estaCerrado(pHoraActual: number): boolean {
         if (pHoraActual < 9 || pHoraActual > 24) {
             return true
@@ -46,13 +36,12 @@ export class Casino {
             return false
         }
     }
-   
-
-   
     getNombre(): string {
         return this.nombre;
     }
-  
+   public mostrarReglasGenerales(): string{
+        return " Reglas Generales del Casino\nAcceso y Registro:\nPara acceder a nuestros juegos, debes tener al menos 18 años\nTodos los jugadores deben registrarse en la plataforma\nCuenta de Usuario:\nCada jugador es responsable de mantener la confidencialidad de sus credenciales de acceso.\nSolo se permite una cuenta por persona.\nDepósitos y Retiros:\nTodos los depósitos deben hacerse a través de métodos de pago autorizados en la plataforma.\nLos retiros están sujetos a verificaciones y pueden demorar hasta 48 horas hábiles."
+    }
 }
 
 

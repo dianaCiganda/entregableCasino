@@ -11,7 +11,7 @@ export class Raspadita extends Juego {
         [7, 8, 9]
     ];
     constructor(pCostoPorboleto: number, pNombre_juego: string, pSaldo: number, pSimbolos?: string[], pMatriz?: number[][], pNumeroMatriz?: number) {
-        super(pNombre_juego, pSaldo);
+        super(pNombre_juego);
         this.costoPorboleto = pCostoPorboleto;
         this.matriz = pMatriz || this.matriz;
         this.simbolos = pSimbolos || this.simbolos;

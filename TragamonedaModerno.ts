@@ -6,7 +6,7 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     private tipoDeJuego: string = "Moderno";
     constructor(pCantidadFilas: number, pCantidadColumnas: number, pNombre_juego: string,  pTipoDeJuego: string, pSaldo: number, pApuestaMaxima: number, pApuestaMinima: number) {
     
-        super(pNombre_juego, pSaldo);
+        super(pNombre_juego);
         this.cantidadFilas = pCantidadFilas;
         this.cantidadColumnas = pCantidadColumnas;
         this.tipoDeJuego = pTipoDeJuego;
