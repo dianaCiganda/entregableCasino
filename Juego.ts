@@ -14,9 +14,6 @@ export abstract class Juego {
 
     abstract pagar(saldo:number): number;
 
-    abstract resultadoDelJuego(pvalor:string): void;
-   
-    
     abstract comenzarJuego(saldo:number): void  
 
    

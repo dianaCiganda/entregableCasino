@@ -25,9 +25,7 @@ export class Raspadita extends Juego {
         let pago: number = this.costoPorboleto * 4;
         return pago
     }
-    resultadoDelJuego(pValor:string): void {
-        console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${pValor}`);
-    }
+
     //preguntar porque no toma el tipo Usuario
     comenzarJuego(user: any): number {
         if (user.getSaldo() >= this.costoPorboleto) {
@@ -105,7 +103,8 @@ export class Raspadita extends Juego {
         // si seleccionados que son los emojis coincide el valor elegido, gana
         const valorElegido = contenido[this.numeroMatriz - 1];//le resto uno al numero ingresado para trabajar en posiciones
         if (emojis.includes(valorElegido)) {//devuelve true si esta incluido
-            this.resultadoDelJuego(valorElegido);
+            console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${valorElegido}`);
+
             const premio: number = this.pagar();
             user.actualizarSaldo(premio); // actualiza saldo al ganar
 

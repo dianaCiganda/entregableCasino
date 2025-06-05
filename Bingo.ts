@@ -60,9 +60,6 @@ export class Bingo extends Juego {
     let pago: number = this.costoPorBolilla * 100 + this.costoPorBolilla;//10.000
     return pago
   }
-  resultadoDelJuego(): string {
-    throw new Error("Method not implemented.");
-  }
   cargarSaldo(): void {
     throw new Error("Method not implemented.");
   }
