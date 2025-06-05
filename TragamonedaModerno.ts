@@ -1,5 +1,6 @@
 import{ Juego } from './Juego';
 import { ITragamonedas } from "./ITragamonedas.js";
+import { Usuario } from './Usuario';
 export class TragamonedaModerno extends Juego implements ITragamonedas {
     private cantidadFilas: number=4;
     private cantidadColumnas: number=4;
@@ -22,19 +23,15 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     cargarSaldo(): void {
         throw new Error('Method not implemented.');
     }
-    comenzarJuego(): void {
-        throw new Error('Method not implemented.');
-    }
-    public girar(): void {
-        throw new Error('Method not implemented.');
-    }
     public subirApuesta(apuesta: number): void {
         throw new Error('Method not implemented.');
     }
    public bajarApuesta(apuesta: number): void {
         throw new Error('Method not implemented.');
     }
-   
+   girar(user: Usuario): void {
+       
+   }
    
     getNombreJuego(): string {
         return this.nombre_juego;

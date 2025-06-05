@@ -31,8 +31,6 @@ let user = new Usuario("user_123", "kajjkaja", "Casino", 0, "Rafael Gomez", []);
 //preguntar como hacer mas limpieza de parámetros
 
 const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
-    cantidadFilas: 3,
-    cantidadColumnas: 3,
     nombre_juego: "Tragamoneda Clásica",
     subirApuesta: 100,
     bajarApuesta: 10,
@@ -44,8 +42,6 @@ const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
 });
 
 const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
-    cantidadFilas: 4,
-    cantidadColumnas: 4,
     nombre_juego: "Tragamoneda Estrella Azul",
     subirApuesta: 100,
     bajarApuesta: 10,
@@ -145,8 +141,29 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                     case 2:
                         console.log(`${myTragamoneda1.getNombreJuego()}`);
-                        while (saldo >= 1000) {
+                        nuevoSaldo = 0;
+                        console.log(`${myTragamoneda1.getNombreJuego()}`);
+                        user.setSaldo(saldo);
+                        saldo = user.getSaldo();
 
+                        while (user.getSaldo() >= 800) {
+                            console.log(`Saldo actual: ${user.getSaldo()}`);
+                            myTragamoneda1.girar(user);
+                            console.log("Saldo actualizado:", user.getSaldo());
+
+                            if (user.getSaldo() < 800) {
+                                console.log("Saldo insuficiente para jugar otra vez.");
+
+                                nuevoSaldo = preguntarYRecargarSaldo();
+                                console.log("nuevo saldo", nuevoSaldo);
+
+                                if (nuevoSaldo > 0) {
+                                    saldo = nuevoSaldo;
+                                    user.setSaldo(saldo);
+                                } else {
+                                    break;
+                                }
+                            }
 
                             let respuesta: string = "";
                             while (respuesta != "M" && respuesta != "X" && respuesta != "C") {
@@ -164,6 +181,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                         }
                         saldo = user.getSaldo();
                         break;
+
 
                     case 3:
                         console.log(` ${myTragamoneda2.getNombreJuego()}`);
