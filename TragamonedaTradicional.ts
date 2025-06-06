@@ -15,11 +15,11 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
     }
     subirApuesta(): number {
-        let subir: number =1200;
+        let subir: number = this.valorDelTiro + 400;
         return subir
     }
     bajarApuesta(): number {
-        let bajar: number =400;
+        let bajar: number = this.valorDelTiro - 400;
         return bajar
     }
 
@@ -35,41 +35,47 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
     // cargarSaldo(): void {
     //     throw new Error('Method not implemented.');
     // }
-   girar(user: any): void {
-    if (user.getSaldo() >= this.valorDelTiro) {
-        console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
-        
-        const descuento = this.cobrar();
-        user.actualizarSaldo(-descuento); // ✅ Descontar antes de mostrar el juego
+    girar(user: any): void {
+        if (user.getSaldo() >= this.valorDelTiro) {
+            console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
 
-        this.mostrarTragamoneda(user);    // Mostrar y calcular premio
-    } else {
-        console.log("❌ Saldo insuficiente para jugar.");
+            const descuento = this.cobrar();
+            user.actualizarSaldo(-descuento); // ✅ Descontar antes de mostrar el juego
+
+            this.mostrarTragamoneda(user);    // Mostrar y calcular premio
+        }
+
+        return user.getSaldo(); // Mostrar saldo final
     }
 
-    return user.getSaldo(); // Mostrar saldo final
-}
-
-    modificarApuesta(user:any):void{
-          let modificarApuesta: string = ""
-                while (modificarApuesta != "S" && modificarApuesta != "B") {
-                    modificarApuesta = rs.question("Ingrese: \nS para subir apuesta\nB Para bajar apuesta\nCualquier tecla para continuar jugando...").toUpperCase()
-                    if (modificarApuesta == "S") {
-                        this.valorDelTiro = this.subirApuesta();
-                        console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
-                     
-
-
-                    } else if (modificarApuesta == "B") {
-                        this.valorDelTiro = this.bajarApuesta()
-                        console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
-                       
-                    } else {
-                        break
-                    }
-
-
+    modificarApuesta(user: any): void {
+        let modificarApuesta: string = ""
+        while (modificarApuesta != "S" && modificarApuesta != "B") {
+            modificarApuesta = rs.question("Ingrese: \nS para subir apuesta\nB Para bajar apuesta\nCualquier tecla para continuar jugando...").toUpperCase()
+            if (modificarApuesta == "S") {
+                this.valorDelTiro = this.subirApuesta();
+                if (this.valorDelTiro >= 1200) {
+                    this.valorDelTiro = 1200;
+                    console.log("no se puede subir mas la apuesta ");
+                    break
                 }
+
+            } else if (modificarApuesta == "B") {
+
+                this.valorDelTiro = this.bajarApuesta();
+                if (this.valorDelTiro <= 400) {
+                    this.valorDelTiro = 400;
+                    console.log("no se puede reducir mas la apuesta");
+                    break
+                }
+
+            } else {
+                break
+            }
+
+            console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
+
+        }
     }
     mostrarTragamoneda(user: any): string {
         // Crear arreglo con 9 símbolos aleatorios
@@ -107,28 +113,26 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
             if (fila[0] === fila[1] && fila[1] === fila[2]) {
                 const premio: number = this.pagar();
                 user.actualizarSaldo(premio); // actualiza saldo al ganar
-                
+
                 coincidencias++;
             }
-            }
-                if (coincidencias == 1 || coincidencias == 2 || coincidencias == 3) {
-                    console.log("🎉 Usted ha ganado!!!!!");
-                            console.log("Saldo actualizado:", user.getSaldo());
+        }
+        if (coincidencias == 1 || coincidencias == 2 || coincidencias == 3) {
+            console.log("🎉 Usted ha ganado!!!!!");
+            console.log("Saldo actualizado:", user.getSaldo());
 
-                    
-                    
-                } else {
-                    
-                    console.log("😞 Usted ha perdido!!!!!");
-                            console.log("Saldo actualizado:", user.getSaldo());
 
-                    
-                }
-                // Si ninguna fila es ganadora, mostramos mensaje de pérdida
-                
-                
-                this.modificarApuesta(user);
-                return user.getSaldo();
+
+        } else {
+
+            console.log("😞 Usted ha perdido!!!!!");
+            console.log("Saldo actualizado:", user.getSaldo());
+        }
+        // Si ninguna fila es ganadora, mostramos mensaje de pérdida
+
+
+        this.modificarApuesta(user);
+        return user.getSaldo();
     }
 
     getNombreJuego(): string {

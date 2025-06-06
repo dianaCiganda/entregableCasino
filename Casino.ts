@@ -29,7 +29,7 @@ export class Casino {
     };
 //método que retorna si el casino esta cerrado con un boolean
     public estaCerrado(pHoraActual: number): boolean {
-        if (pHoraActual < 9 || pHoraActual > 24) {
+        if (pHoraActual < 8 || pHoraActual > 24) {
             return true
         }
         else {

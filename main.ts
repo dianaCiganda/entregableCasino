@@ -57,13 +57,7 @@ casino_1.agregarJuego(myTragamoneda1);
 casino_1.agregarJuego(myTragamoneda2);
 casino_1.agregarJuego(raspadita_1);
 
-function preguntarYRecargarSaldo(): number {
-    const quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
-    if (quiereRecargar == "S") {
-        return user.recargarSaldo();
-    }
-    return user.getSaldo();
-}
+
 
 if (!casino_1.estaCerrado(horaActual)) {
     console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
@@ -72,7 +66,7 @@ if (!casino_1.estaCerrado(horaActual)) {
         if (edad < 18 || edad > 99) {
             console.log("No esta permitido el ingreso de menores de 18 años");
         }
-        user.usuarioRandom();
+        // user.usuarioRandom();
         console.log(casino_1.mostrarReglasGenerales());
         casino_1.mostrarMensaje();
 
@@ -111,7 +105,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                             if (user.getSaldo() < 100) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
 
-                                nuevoSaldo = preguntarYRecargarSaldo();
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
                                 console.log("nuevo saldo", nuevoSaldo);
 
                                 if (nuevoSaldo > 0) {
@@ -146,10 +140,10 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                         while (user.getSaldo() >= 400) {
                             myTragamoneda1.girar(user);
-                            if (user.getSaldo() < 400) {
+                            if (user.getSaldo() <= 400) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
 
-                                nuevoSaldo = preguntarYRecargarSaldo();
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
                                 console.log("nuevo saldo", nuevoSaldo);
 
                                 if (nuevoSaldo > 0) {
@@ -214,7 +208,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                             if (user.getSaldo() < 500) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
 
-                                nuevoSaldo = preguntarYRecargarSaldo();
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
                                 console.log("nuevo saldo", nuevoSaldo);
 
                                 if (nuevoSaldo > 0) {
@@ -241,9 +235,6 @@ if (!casino_1.estaCerrado(horaActual)) {
                         }
                         saldo = user.getSaldo();
                         break;
-
-
-
                 }
                 console.log(`Gracias por jugar a Casino: ${casino_1.getNombre()}`);
             }

@@ -81,4 +81,11 @@ public actualizarSaldo(monto: number): number {
         }
         
     }
+    preguntarYRecargarSaldo(): number {
+        const quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
+        if (quiereRecargar == "S") {
+            return this.recargarSaldo();
+        }
+        return this.getSaldo();
+    }
 }
