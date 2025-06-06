@@ -140,16 +140,12 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                     case 2:
                         console.log(`${myTragamoneda1.getNombreJuego()}`);
-                        nuevoSaldo = 0;
-                        console.log(`${myTragamoneda1.getNombreJuego()}`);
+                        nuevoSaldo = 0;;
                         user.setSaldo(saldo);
                         saldo = user.getSaldo();
 
                         while (user.getSaldo() >= 400) {
-                          
                             myTragamoneda1.girar(user);
-                            console.log("Saldo actualizado:", user.getSaldo());
-
                             if (user.getSaldo() < 400) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
 

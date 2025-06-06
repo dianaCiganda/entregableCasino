@@ -52,8 +52,8 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
     modificarApuesta(user:any):void{
           let modificarApuesta: string = ""
-                while (modificarApuesta != "S" && modificarApuesta != "N") {
-                    modificarApuesta = rs.question("desea subir apuesta ingrese S, Bdesea bajar apuesta Ingrese , sino cualquier tecla para continuar").toUpperCase()
+                while (modificarApuesta != "S" && modificarApuesta != "B") {
+                    modificarApuesta = rs.question("Ingrese: \nS para subir apuesta\nB Para bajar apuesta\nCualquier tecla para continuar jugando...").toUpperCase()
                     if (modificarApuesta == "S") {
                         this.valorDelTiro = this.subirApuesta();
                         console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
