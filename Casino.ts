@@ -41,8 +41,7 @@ export class Casino {
     }
    public mostrarReglasGenerales(): string{
         return " Reglas Generales del Casino\nAcceso y Registro:\nPara acceder a nuestros juegos, debes tener al menos 18 años\nTodos los jugadores deben registrarse en la plataforma\nCuenta de Usuario:\nCada jugador es responsable de mantener la confidencialidad de sus credenciales de acceso.\nSolo se permite una cuenta por persona.\nDepósitos y Retiros:\nTodos los depósitos deben hacerse a través de métodos de pago autorizados en la plataforma.\nLos retiros están sujetos a verificaciones y pueden demorar hasta 48 horas hábiles."
-    }
 }
-
+}
 
 

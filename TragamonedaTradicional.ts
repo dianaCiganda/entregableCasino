@@ -1,5 +1,6 @@
 import { Juego } from './Juego';
 import { ITragamonedas } from "./ITragamonedas.js";
+import * as rs from 'readline-sync';
 export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
     private emojiSuerte: string[] = [];
@@ -13,11 +14,13 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
         this.valorDelTiro = pValorDelTiro || this.valorDelTiro
 
     }
-    subirApuesta(apuesta: number): void {
-        throw new Error('Method not implemented.');
+    subirApuesta(): number {
+        let subir: number =1200;
+        return subir
     }
-    bajarApuesta(apuesta: number): void {
-        throw new Error('Method not implemented.');
+    bajarApuesta(): number {
+        let bajar: number =400;
+        return bajar
     }
 
     cobrar(): number {
@@ -32,23 +35,43 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
     // cargarSaldo(): void {
     //     throw new Error('Method not implemented.');
     // }
-    girar(user: any): void {
-        if (user.getSaldo() >= this.valorDelTiro) {
-            console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
-
-            this.mostrarTragamoneda(user);
-            const descuento = this.cobrar();
-            user.actualizarSaldo(-descuento); // descontar costo del boleto
-
-
-            return user.getSaldo();  // retorno de saldo actualizado
-        }
-        let resultado:string=this.mostrarTragamoneda(user);
-        console.log(resultado);
+   girar(user: any): void {
+    if (user.getSaldo() >= this.valorDelTiro) {
+        console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
         
+        const descuento = this.cobrar();
+        user.actualizarSaldo(-descuento); // ✅ Descontar antes de mostrar el juego
 
+        this.mostrarTragamoneda(user);    // Mostrar y calcular premio
+    } else {
+        console.log("❌ Saldo insuficiente para jugar.");
     }
-    mostrarTragamoneda(user:any): string{
+
+    return user.getSaldo(); // Mostrar saldo final
+}
+
+    modificarApuesta(user:any):void{
+          let modificarApuesta: string = ""
+                while (modificarApuesta != "S" && modificarApuesta != "N") {
+                    modificarApuesta = rs.question("desea subir apuesta ingrese S, Bdesea bajar apuesta Ingrese , sino cualquier tecla para continuar").toUpperCase()
+                    if (modificarApuesta == "S") {
+                        this.valorDelTiro = this.subirApuesta();
+                        console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
+                     
+
+
+                    } else if (modificarApuesta == "B") {
+                        this.valorDelTiro = this.bajarApuesta()
+                        console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
+                       
+                    } else {
+                        break
+                    }
+
+
+                }
+    }
+    mostrarTragamoneda(user: any): string {
         // Crear arreglo con 9 símbolos aleatorios
         const contenido: string[] = [];
         while (contenido.length < 9) {
@@ -77,31 +100,36 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
             }
         }
 
-       // Verificar si hay una fila ganadora
-for (let i = 0; i < 3; i++) {
-    const fila = matriz[i];
-    let coincidencias:number=0;
-    if (fila[0] === fila[1] && fila[1] === fila[2]) {
-        const premio: number = this.pagar();
-            user.actualizarSaldo(premio); // actualiza saldo al ganar
+        // Verificar si hay una fila ganadora
+        let coincidencias: number = 0;
+        for (let i = 0; i < 3; i++) {
+            const fila = matriz[i];
+            if (fila[0] === fila[1] && fila[1] === fila[2]) {
+                const premio: number = this.pagar();
+                user.actualizarSaldo(premio); // actualiza saldo al ganar
+                
+                coincidencias++;
+            }
+            }
+                if (coincidencias == 1 || coincidencias == 2 || coincidencias == 3) {
+                    console.log("🎉 Usted ha ganado!!!!!");
+                            console.log("Saldo actualizado:", user.getSaldo());
 
-        coincidencias++;
-        if(coincidencias==1 || coincidencias==2 || coincidencias==3){
-            console.log( "🎉 Usted ha ganado!!!!!");
+                    
+                    
+                } else {
+                    
+                    console.log("😞 Usted ha perdido!!!!!");
+                            console.log("Saldo actualizado:", user.getSaldo());
 
-        }else{
-
-            console.log("😞 Usted ha perdido!!!!!");
-        }
-        
+                    
+                }
+                // Si ninguna fila es ganadora, mostramos mensaje de pérdida
+                
+                
+                this.modificarApuesta(user);
+                return user.getSaldo();
     }
-}
-
-// Si ninguna fila es ganadora, mostramos mensaje de pérdida
-  return user.getSaldo();
-    }
-
-
 
     getNombreJuego(): string {
         return this.nombre_juego;

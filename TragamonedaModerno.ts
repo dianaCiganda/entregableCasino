@@ -23,10 +23,10 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     cargarSaldo(): void {
         throw new Error('Method not implemented.');
     }
-    public subirApuesta(apuesta: number): void {
+    public subirApuesta(apuesta: number):number {
         throw new Error('Method not implemented.');
     }
-   public bajarApuesta(apuesta: number): void {
+   public bajarApuesta(apuesta: number):number {
         throw new Error('Method not implemented.');
     }
    girar(user: Usuario): void {
