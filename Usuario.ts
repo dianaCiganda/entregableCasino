@@ -4,35 +4,36 @@ import * as rs from 'readline-sync';
 export class Usuario extends Casino {
     private usuario: string;
     private contrasenia: string;
-    private saldo:number;
+    private saldo: number=0;
 
-    constructor(pUsuario: string, pContrasenia: string, pNombre: string, pSaldo:number, pCajero: string, pJuegos: Juego[]) {
+    constructor(pUsuario: string, pContrasenia: string, pNombre: string, pSaldo: number, pCajero: string, pJuegos: Juego[]) {
         super(pNombre, pCajero, pJuegos)
 
         this.usuario = pUsuario;
         this.contrasenia = pContrasenia;
-        this.saldo=pSaldo;
+        this.saldo = pSaldo;
     }
 
- recargarSaldo(): number {
-
-        while (this.saldo < 1000) {
-            console.log("El saldo debe ser mayor o igual a $1000");
-            this.saldo =rs.questionInt("Ingrese el saldo que desea cargar: ");
-        }
-        return this.saldo;
-
+recargarSaldo(): number {
+    let saldoAux=0;
+    while (saldoAux < 1000) {
+        console.log("El monto mínimo a recargar es $1000.");
+        saldoAux = rs.questionInt("Ingrese el monto que desea recargar: ");
     }
-      getSaldo(): number {
-        return this.saldo;
-    }
-public actualizarSaldo(monto: number): number {
-        this.saldo += monto;
+    return saldoAux;
+}
+
+    getSaldo(): number {
         return this.saldo;
     }
 
- setSaldo(nuevoSaldo:number):void{
-        this.saldo=nuevoSaldo;
+
+    actualizarSaldo(monto: number):number {
+       return this.saldo += monto;
+    }
+
+    setSaldo(nuevoSaldo: number): void {
+        this.saldo = nuevoSaldo;
 
     }
     usuarioRandom(): void {
@@ -65,27 +66,28 @@ public actualizarSaldo(monto: number): number {
         while (inputUsuario != this.usuario || inputContraseña != this.contrasenia) {
             inputUsuario = rs.question("Ingrese su nombre de usuario: ");
             inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
-            
-            if(inputUsuario != this.usuario){
+
+            if (inputUsuario != this.usuario) {
                 console.log("Usuario incorrecto vuelva a ingresar los datos");
-    
-            }else if( inputContraseña != this.contrasenia){
-    
+
+            } else if (inputContraseña != this.contrasenia) {
+
                 console.log("contraseña incorrecta vuelva a ingresar los datos");
             }
             if (inputUsuario == this.usuario && inputContraseña == this.contrasenia) {
-                
+
                 console.log("Acceso concedido");
-                
+
             }
         }
-        
+
     }
+
     preguntarYRecargarSaldo(): number {
         const quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
         if (quiereRecargar == "S") {
             return this.recargarSaldo();
         }
-        return this.getSaldo();
+        return 0; 
     }
 }

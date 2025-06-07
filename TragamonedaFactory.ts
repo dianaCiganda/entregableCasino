@@ -6,9 +6,9 @@ import { TragamonedaTradicional } from "./TragamonedaTradicional";
 export  class TragamonedaFactory {
     public  crearJuego(tipoDeJuego: string, atributos: any): ITragamonedas {
         if (tipoDeJuego === "Moderno") {
-            return new TragamonedaModerno(atributos.cantidadFilas, atributos.cantidadColumnas, atributos.nombre_juego, atributos.saldo, atributos.apuestaMaxima, atributos.apuestaMinima, atributos.tipoDeJuego);
+            return new TragamonedaModerno( atributos.nombre_juego,atributos.tipoDeJuego);
         } else if (tipoDeJuego === "Tradicional") {
-            return new TragamonedaTradicional( atributos.nombre_juego, atributos.bajarApuesta,atributos.saldo, atributos.apuestaMinima,atributos.tipoDeJuego, atributos.valorDelTiro);
+            return new TragamonedaTradicional( atributos.nombre_juego,atributos.tipoDeJuego);
         } else {
             throw new Error("Tipo de tragamoneda no válido");
 

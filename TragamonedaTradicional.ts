@@ -1,25 +1,31 @@
 import { Juego } from './Juego';
 import { ITragamonedas } from "./ITragamonedas.js";
 import * as rs from 'readline-sync';
+import { Usuario } from './Usuario';
 export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
     private emojiSuerte: string[] = [];
     private tipoDeJuego: string = "Tradicional";
     private valorDelTiro: number = 800;
-    constructor(pNombre_juego: string, pTipoDeJuego: string, pSaldo: number, pApuestaMaxima: number, pApuestaMinima: number, pValorDelTiro?: number) {
+    private apuestaMinima:number=400;
+    private apuestaMaxima:number=2000;
+    constructor(pNombre_juego: string, pApuestaMaxima?: number, pApuestaMinima?: number, pValorDelTiro?:number,pTipoDeJuego?:string) {
 
-        super(pNombre_juego);
-        this.tipoDeJuego = pTipoDeJuego;
+        super(pNombre_juego)
+        this.tipoDeJuego = pTipoDeJuego || this.tipoDeJuego;
         this.emojiSuerte = ["🍀", "🐞", "🧿", "🧧", "🔮", "🐘"];
-        this.valorDelTiro = pValorDelTiro || this.valorDelTiro
+        this.valorDelTiro = pValorDelTiro || this.valorDelTiro;
+        this.apuestaMaxima=pApuestaMaxima || this.apuestaMaxima;
+        this.apuestaMinima=pApuestaMinima || this.apuestaMinima;
+        
 
     }
     subirApuesta(): number {
-        let subir: number = this.valorDelTiro + 400;
+        let subir: number = this.valorDelTiro + this.apuestaMinima;
         return subir
     }
     bajarApuesta(): number {
-        let bajar: number = this.valorDelTiro - 400;
+        let bajar: number = this.valorDelTiro - this.apuestaMinima;
         return bajar
     }
 
@@ -31,53 +37,56 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
         let pago: number = this.valorDelTiro * 4 + this.valorDelTiro;
         return pago
     }
-
-    // cargarSaldo(): void {
-    //     throw new Error('Method not implemented.');
-    // }
     girar(user: any): void {
-        if (user.getSaldo() >= this.valorDelTiro) {
+        if (user.getSaldo() >=this.valorDelTiro) {
             console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
 
             const descuento = this.cobrar();
-            user.actualizarSaldo(-descuento); // ✅ Descontar antes de mostrar el juego
+            user.actualizarSaldo(-descuento); 
 
-            this.mostrarTragamoneda(user);    // Mostrar y calcular premio
+            this.mostrarTragamoneda(user);
         }
 
-        return user.getSaldo(); // Mostrar saldo final
+        return user.getSaldo();
     }
 
-    modificarApuesta(user: any): void {
+    modificarApuesta(user:Usuario): void {
         let modificarApuesta: string = ""
-        while (modificarApuesta != "S" && modificarApuesta != "B") {
-            modificarApuesta = rs.question("Ingrese: \nS para subir apuesta\nB Para bajar apuesta\nCualquier tecla para continuar jugando...").toUpperCase()
+        while (modificarApuesta != "S" && modificarApuesta != "B" && modificarApuesta!="C") {
+            modificarApuesta = rs.question("Ingrese: \n(S) Para subir apuesta\n(B) Para bajar apuesta\n(C) Para cargar saldo\n(J) Para jugar: ").toUpperCase()
             if (modificarApuesta == "S") {
                 this.valorDelTiro = this.subirApuesta();
-                if (this.valorDelTiro >= 1200) {
-                    this.valorDelTiro = 1200;
-                    console.log("no se puede subir mas la apuesta ");
+                if (this.valorDelTiro >this.apuestaMaxima) {
+                        this.valorDelTiro=this.apuestaMaxima;
+                        console.log("no se puede subir mas la apuesta ");
                     break
                 }
 
             } else if (modificarApuesta == "B") {
 
                 this.valorDelTiro = this.bajarApuesta();
-                if (this.valorDelTiro <= 400) {
-                    this.valorDelTiro = 400;
-                    console.log("no se puede reducir mas la apuesta");
+                if (this.valorDelTiro < this.apuestaMinima) {
+                        this.valorDelTiro=this.apuestaMinima;
+                        console.log("no se puede reducir mas la apuesta");
                     break
+               
                 }
 
-            } else {
+            }else if(modificarApuesta=="C") {
+                
+           let saldoAsumar= user.recargarSaldo();
+           
+            user.setSaldo(saldoAsumar+user.getSaldo())//saldo residual mas actual
+            }
+            else if(modificarApuesta=="J") {
+                this.girar(user)
                 break
             }
-
             console.log(`El valor del tiro de la tragamoneda  es $${this.valorDelTiro}`);
 
         }
     }
-    mostrarTragamoneda(user: any): string {
+    mostrarTragamoneda(user: any):number {
         // Crear arreglo con 9 símbolos aleatorios
         const contenido: string[] = [];
         while (contenido.length < 9) {
@@ -128,16 +137,18 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
             console.log("😞 Usted ha perdido!!!!!");
             console.log("Saldo actualizado:", user.getSaldo());
         }
-        // Si ninguna fila es ganadora, mostramos mensaje de pérdida
+        // Si ninguna fila es ganadora, mostramos mensaje de pérdida y actualizamos saldo
 
 
-        this.modificarApuesta(user);
+        // this.modificarApuesta(user);
         return user.getSaldo();
     }
 
     getNombreJuego(): string {
         return this.nombre_juego;
     }
-
+getValorTiro():number{
+    return this.valorDelTiro
+}
 }
 

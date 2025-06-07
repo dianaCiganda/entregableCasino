@@ -32,22 +32,11 @@ let user = new Usuario("user_123", "kajjkaja", "Casino", 0, "Rafael Gomez", []);
 
 const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
     nombre_juego: "Tragamoneda Clásica",
-    subirApuesta: 100,
-    bajarApuesta: 10,
-    saldo: 1000,
-    apuestaMaxima: 500,
-    apuestaMinima: 50,
     tipoDeJuego: "Tradicional"
-    //cambiar valores por defectod de las 2 tragamonedas
 });
 
 const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
     nombre_juego: "Tragamoneda Estrella Azul",
-    subirApuesta: 100,
-    bajarApuesta: 10,
-    saldo: 1000,
-    apuestaMaxima: 500,
-    apuestaMinima: 50,
     tipoDeJuego: "Moderno"
 });
 
@@ -93,7 +82,6 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                 switch (opcion) {
                     case 1:
-                        nuevoSaldo = 0;
                         console.log(`${bingo_1.getNombreJuego()}`);
                         user.setSaldo(saldo);
                         saldo = user.getSaldo();
@@ -101,6 +89,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                         while (user.getSaldo() >= 100) {
                             console.log(`Saldo actual: ${user.getSaldo()}`);
                             bingo_1.comenzarJuego(user);
+                            console.log(`Saldo actualizado: ${user.getSaldo()}`);
 
                             if (user.getSaldo() < 100) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
@@ -134,34 +123,40 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                     case 2:
                         console.log(`${myTragamoneda1.getNombreJuego()}`);
-                        nuevoSaldo = 0;;
                         user.setSaldo(saldo);
-                        saldo = user.getSaldo();
 
-                        while (user.getSaldo() >= 400) {
+                        while (user.getSaldo() > 0) {
+                            console.log(`Saldo actual: ${user.getSaldo()}`);
                             myTragamoneda1.girar(user);
-                            if (user.getSaldo() <= 400) {
-                                console.log("Saldo insuficiente para jugar otra vez.");
 
-                                nuevoSaldo = user.preguntarYRecargarSaldo();
-                                console.log("nuevo saldo", nuevoSaldo);
+                            if (user.getSaldo() < myTragamoneda1.getValorTiro()) {
+                                console.log("Saldo insuficiente para jugar otra vez.");
+                                myTragamoneda1.modificarApuesta(user);
+                                let nuevoSaldo = user.preguntarYRecargarSaldo();
 
                                 if (nuevoSaldo > 0) {
-                                    saldo = nuevoSaldo;
-                                    user.setSaldo(saldo);
-                                } else {
-                                    break;
+                                    user.actualizarSaldo(nuevoSaldo);
+                                    console.log("Saldo actualizado:", user.getSaldo());
                                 }
+                            } else {
+                                myTragamoneda1.modificarApuesta(user)
+                            }
+                            if (user.getSaldo() == 0) {
+                                console.log("Saldo insuficiente para jugar otra vez.");
+                                myTragamoneda1.modificarApuesta(user);
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
+
                             }
 
                             let respuesta: string = "";
                             while (respuesta != "M" && respuesta != "X" && respuesta != "C") {
-
                                 respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
                             }
                             if (respuesta === "M") {
                                 break;
-
+                            }
+                            if (respuesta == "C") {
+                                continue;
                             }
                             if (respuesta === "X") {
                                 salir = "X";
@@ -169,22 +164,41 @@ if (!casino_1.estaCerrado(horaActual)) {
                             }
                         }
                         saldo = user.getSaldo();
-                        break;
-
-
+                        break
                     case 3:
-                        console.log(` ${myTragamoneda2.getNombreJuego()}`);
-                        while (saldo >= 1000) {
+                        console.log(`${myTragamoneda2.getNombreJuego()}`);
+                        user.setSaldo(saldo);
 
+                        while (user.getSaldo() > 0) {
+                            console.log(`Saldo actual: ${user.getSaldo()}`);
+                            myTragamoneda2.girar(user);
 
+                            if (user.getSaldo() < myTragamoneda2.getValorTiro() && user.getSaldo() == 0) {
+                                console.log("Saldo insuficiente para jugar otra vez.");
+                                myTragamoneda2.modificarApuesta(user);
+                                let nuevoSaldo = user.preguntarYRecargarSaldo();
+
+                                if (nuevoSaldo > 0) {
+                                    user.actualizarSaldo(nuevoSaldo);
+                                    console.log("Saldo actualizado:", user.getSaldo());
+                                }
+                            } else {
+                                myTragamoneda2.modificarApuesta(user)
+                            }
+                            if (user.getSaldo() == 0) {
+                                console.log("Saldo insuficiente para jugar otra vez.");
+                                myTragamoneda1.modificarApuesta(user);
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
+                            }
                             let respuesta: string = "";
                             while (respuesta != "M" && respuesta != "X" && respuesta != "C") {
-
                                 respuesta = rs.question("Presione 'M' para menú principal, 'C' para continuar o 'X' para salir: ").toUpperCase();
                             }
                             if (respuesta === "M") {
                                 break;
-
+                            }
+                            if (respuesta == "C") {
+                                continue;
                             }
                             if (respuesta === "X") {
                                 salir = "X";
@@ -192,10 +206,8 @@ if (!casino_1.estaCerrado(horaActual)) {
                             }
                         }
                         saldo = user.getSaldo();
-                        break;
-
+                        break
                     case 4:
-                        nuevoSaldo = 0;
                         console.log(`${raspadita_1.getNombreJuego()}`);
                         user.setSaldo(saldo);
                         saldo = user.getSaldo();
@@ -241,6 +253,7 @@ if (!casino_1.estaCerrado(horaActual)) {
 
 
         }
+
     }
 } else {
     console.log(`El casino está cerrado, la hora actual es: ${horaActual}`);
