@@ -7,12 +7,12 @@ export class Usuario extends Casino {
     private contrasenia: string;
     private saldo: number=0;
 
-    constructor(pUsuario: string, pContrasenia: string, pNombre: string, pSaldo: number, pCajero: string, pJuegos: Juego[]) {
+    constructor(pUsuario: string, pContrasenia: string, pNombre: string, pCajero: string, pJuegos: Juego[], pSaldo?: number) {
         super(pNombre, pCajero, pJuegos)
 
         this.usuario = pUsuario;
         this.contrasenia = pContrasenia;
-        this.saldo = pSaldo;
+        this.saldo = pSaldo ||this.saldo
     }
 
 recargarSaldo(): number {

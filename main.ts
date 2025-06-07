@@ -22,17 +22,23 @@ const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
 
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
 const fabricaTragamonedas = new TragamonedaFactory();
-let user = new Usuario("user_123", "kajjkaja", "Casino", 0, "Rafael Gomez", []);
+let user = new Usuario("user_123", "kajjkaja", "Casino","Rafael Gomez", []);
 //preguntar como hacer mas limpieza de parámetros
 
 const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
     nombre_juego: "Tragamoneda Clásica",
+    apuestaMaxima:2000,
+    apuestaMininima:400,
+    valorDelTiro:800,
     tipoDeJuego: "Tradicional"
 });
 
 const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
     nombre_juego: "Tragamoneda Estrella Azul",
-    tipoDeJuego: "Moderno"
+    apuestaMaxima:4000,
+    apuestaMininima:500,
+    valorDelTiro:1000,
+    tipoDeJuego: "Tradicional"
 });
 
 

@@ -6,7 +6,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
     private emojiSuerte: string[] = [];
     private tipoDeJuego: string = "Tradicional";
-    private valorDelTiro: number = 800;
+    private valorDelTiro: number =800;
     private apuestaMinima:number=400;
     private apuestaMaxima:number=2000;
     constructor(pNombre_juego: string, pApuestaMaxima?: number, pApuestaMinima?: number, pValorDelTiro?:number,pTipoDeJuego?:string) {
