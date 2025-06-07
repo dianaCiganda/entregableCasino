@@ -67,7 +67,7 @@ export class Bingo extends Juego {
 
 
     if (user.getSaldo() >= this.costoPorBolilla) {
-      console.log(`El valor del cartón de bingo es $${this.costoPorBolilla}`);
+      console.log(`El valor de la bolilla es:  $${this.costoPorBolilla}`);
       const descuento = this.cobrar();
       user.actualizarSaldo(-descuento);
 
