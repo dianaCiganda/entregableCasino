@@ -5,11 +5,6 @@ import { Raspadita } from "./Raspadita";
 import { ITragamonedas } from "./ITragamonedas";
 import { TragamonedaFactory } from "./TragamonedaFactory";
 import { Usuario } from "./Usuario";
-
-
-
-
-
 function obtenerHoraActual(): number {
     const ahora = new Date();
     const horas = ahora.getHours();
@@ -47,7 +42,6 @@ casino_1.agregarJuego(myTragamoneda2);
 casino_1.agregarJuego(raspadita_1);
 
 
-
 if (!casino_1.estaCerrado(horaActual)) {
     console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
     while (edad < 18 || edad > 99) {
@@ -55,7 +49,7 @@ if (!casino_1.estaCerrado(horaActual)) {
         if (edad < 18 || edad > 99) {
             console.log("No esta permitido el ingreso de menores de 18 años");
         }
-        // user.usuarioRandom();
+         user.usuarioRandom();
         console.log(casino_1.mostrarReglasGenerales());
         casino_1.mostrarMensaje();
 

@@ -1,6 +1,7 @@
 import { Casino } from "./Casino";
 import { Juego } from "./Juego";
 import * as rs from 'readline-sync';
+import * as fs from 'fs';
 export class Usuario extends Casino {
     private usuario: string;
     private contrasenia: string;
@@ -80,7 +81,7 @@ recargarSaldo(): number {
 
             }
         }
-
+ fs.appendFileSync('archivo.txt', '\n'+`Usuario: `+(this.usuario) +` `+ `Contraseña: `+(this.contrasenia));
     }
 
     preguntarYRecargarSaldo(): number {
