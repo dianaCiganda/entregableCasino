@@ -5,32 +5,32 @@ import * as fs from 'fs';
 export class Usuario extends Casino {
     private usuario: string;
     private contrasenia: string;
-    private saldo: number=0;
+    private saldo: number = 0;
 
     constructor(pUsuario: string, pContrasenia: string, pNombre: string, pCajero: string, pJuegos: Juego[], pSaldo?: number) {
         super(pNombre, pCajero, pJuegos)
 
         this.usuario = pUsuario;
         this.contrasenia = pContrasenia;
-        this.saldo = pSaldo ||this.saldo
+        this.saldo = pSaldo || this.saldo
     }
 
-recargarSaldo(): number {
-    let saldoAux=0;
-    while (saldoAux < 1000) {
-        console.log("El monto mínimo a recargar es $1000.");
-        saldoAux = rs.questionInt("Ingrese el monto que desea recargar: ");
+    recargarSaldo(): number {
+        let saldoAux = 0;
+        while (saldoAux < 1000) {
+            console.log("El monto mínimo a recargar es $1000.");
+            saldoAux = rs.questionInt("Ingrese el monto que desea recargar: ");
+        }
+        return saldoAux;
     }
-    return saldoAux;
-}
 
     getSaldo(): number {
         return this.saldo;
     }
 
 
-    actualizarSaldo(monto: number):number {
-       return this.saldo += monto;
+    actualizarSaldo(monto: number): number {
+        return this.saldo += monto;
     }
 
     setSaldo(nuevoSaldo: number): void {
@@ -51,14 +51,11 @@ recargarSaldo(): number {
         // Paso 3: Quitar los primeros dos caracteres ("0.") para quedarnos solo con los aleatorios
         // Paso 4: Tomar los primeros 6 caracteres de la cadena para formar la contraseña
 
-
-
-
         // Mostrar el usuario y contraseña (solo para pruebas)
         console.log("===Ingrese estos datos===");
         console.log("Usuario:", this.usuario);
         console.log("Contraseña:", this.contrasenia);
-        console.log("-----------------------------");
+        console.log('\x1b[33m-------------------------\x1b[0m');
 
         let inputUsuario: string = "";
         let inputContraseña: string = "";
@@ -81,7 +78,7 @@ recargarSaldo(): number {
 
             }
         }
- fs.appendFileSync('archivo.txt', '\n'+`Usuario: `+(this.usuario) +` `+ `Contraseña: `+(this.contrasenia));
+        fs.appendFileSync('archivo.txt', '\n' + `Usuario: ` + (this.usuario) + ` ` + `Contraseña: ` + (this.contrasenia));
     }
 
     preguntarYRecargarSaldo(): number {
@@ -89,6 +86,6 @@ recargarSaldo(): number {
         if (quiereRecargar == "S") {
             return this.recargarSaldo();
         }
-        return 0; 
+        return 0;
     }
 }

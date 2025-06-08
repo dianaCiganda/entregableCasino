@@ -1,4 +1,5 @@
 import { Juego } from "./Juego";
+import { Usuario } from "./Usuario";
 export class Bingo extends Juego {
   private carton1: string[][];
   private carton2: string[][];
@@ -28,8 +29,6 @@ export class Bingo extends Juego {
     this.pozoAcumulado = pPozoAcumulado || this.pozoAcumulado;
     this.cartonEnJuego = pCartonEnJuego || null;
     this.numerosCantados = pNumerosCantados || this.numerosCantados;
-
-
     // Cartones por defecto si no se pasan por parámetros
     this.carton1 = pCarton1 || [
       [' 5', '*', '23', '*', '*', '55', '*', '*', '81'],
@@ -63,9 +62,7 @@ export class Bingo extends Juego {
   cargarSaldo(): void {
     throw new Error("Method not implemented.");
   }
-  comenzarJuego(user: any) {
-
-
+  comenzarJuego(user: Usuario) {
     if (user.getSaldo() >= this.costoPorBolilla) {
       console.log(`El valor de la bolilla es:  $${this.costoPorBolilla}`);
       const descuento = this.cobrar();
@@ -97,7 +94,6 @@ export class Bingo extends Juego {
       console.log(`Número cantado: ${numAzar}`);
       let contador = this.numerosCantados.length;
       console.log("bolilla", contador);
-
 
       // Buscar y marcar el número en el cartón
       for (let fila of this.cartonEnJuego) {
@@ -141,9 +137,6 @@ export class Bingo extends Juego {
       }
     }
   }
-
-
-
   mostrarCarton(carton: string[][]): void {
     if (!carton) {
       console.log("No hay cartón para mostrar.");

@@ -19,7 +19,6 @@ let nuevoSaldo = 0;
 
 const bingo_1 = new Bingo(3, "Bingo Estelar", saldo, 100)
 const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
-
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
 const fabricaTragamonedas = new TragamonedaFactory();
 let user = new Usuario("user_123", "kajjkaja", "Casino","Rafael Gomez", []);
@@ -41,12 +40,10 @@ const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
     tipoDeJuego: "Tradicional"
 });
 
-
 casino_1.agregarJuego(bingo_1);
 casino_1.agregarJuego(myTragamoneda1);
 casino_1.agregarJuego(myTragamoneda2);
 casino_1.agregarJuego(raspadita_1);
-
 
 if (!casino_1.estaCerrado(horaActual)) {
     console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
@@ -58,12 +55,7 @@ if (!casino_1.estaCerrado(horaActual)) {
          user.usuarioRandom();
         console.log(casino_1.mostrarReglasGenerales());
         casino_1.mostrarMensaje();
-
-
-
         saldo = user.recargarSaldo();
-
-
 
         while (salir !== "X") {
             salir = rs.question("Presione 'X' para salir o cualquier otra tecla para continuar: ").toUpperCase();
@@ -90,6 +82,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                             console.log(`Saldo actual: ${user.getSaldo()}`);
                             bingo_1.comenzarJuego(user);
                             console.log(`Saldo actualizado: ${user.getSaldo()}`);
+                            console.log('\x1b[33m-------------------------\x1b[0m');
 
                             if (user.getSaldo() < 100) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
@@ -137,6 +130,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                                 if (nuevoSaldo > 0) {
                                     user.actualizarSaldo(nuevoSaldo);
                                     console.log("Saldo actualizado:", user.getSaldo());
+                                     console.log('\x1b[33m-------------------------\x1b[0m');
                                 }
                             } else {
                                 myTragamoneda1.modificarApuesta(user)
@@ -181,6 +175,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                                 if (nuevoSaldo > 0) {
                                     user.actualizarSaldo(nuevoSaldo);
                                     console.log("Saldo actualizado:", user.getSaldo());
+                                     console.log('\x1b[33m-------------------------\x1b[0m');
                                 }
                             } else {
                                 myTragamoneda2.modificarApuesta(user)
@@ -216,6 +211,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                             console.log(`Saldo actual: ${user.getSaldo()}`);
                             raspadita_1.comenzarJuego(user);
                             console.log("Saldo actualizado:", user.getSaldo());
+                             console.log('\x1b[33m-------------------------\x1b[0m');
 
                             if (user.getSaldo() < 500) {
                                 console.log("Saldo insuficiente para jugar otra vez.");
@@ -250,10 +246,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                 }
                 console.log(`Gracias por jugar a Casino: ${casino_1.getNombre()}`);
             }
-
-
         }
-
     }
 } else {
     console.log(`El casino está cerrado, la hora actual es: ${horaActual}`);

@@ -37,7 +37,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
         let pago: number = this.valorDelTiro * 4 + this.valorDelTiro;
         return pago
     }
-    girar(user: any): void {
+    girar(user: Usuario): number {
         if (user.getSaldo() >=this.valorDelTiro) {
             console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
 

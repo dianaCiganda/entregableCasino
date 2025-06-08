@@ -1,7 +1,7 @@
 import { Casino } from "./Casino";
 import { Usuario } from "./Usuario";
 export interface ITragamonedas {
-girar(user:Usuario):void;
+girar(user:Usuario):number;
 subirApuesta(apuesta:number):number;
 getNombreJuego(): string;
 bajarApuesta(apuesta:number):number;

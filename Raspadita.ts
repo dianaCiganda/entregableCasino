@@ -27,7 +27,7 @@ export class Raspadita extends Juego {
     }
 
     //preguntar porque no toma el tipo Usuario
-    comenzarJuego(user: any): number {
+    comenzarJuego(user:Usuario): number {
         if (user.getSaldo() >= this.costoPorboleto) {
             console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
 

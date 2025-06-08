@@ -1,3 +1,4 @@
+import { log } from "console";
 import { Juego } from "./Juego";
 export class Casino {
     private nombre: string = "";
@@ -14,7 +15,8 @@ export class Casino {
     public mostrarMensaje(): void {
 
         console.log(`Bienvenido al Casino ${this.nombre} "🎰"\n su cajero es ${this.cajero} `);
-    };
+  console.log('\x1b[33m-----------------------------------------------------------------------------\x1b[0m');
+    }
     //menu para las opciones sin necesidad de console.log por si el proyecto crece, lista los juegos
     public menuOpciones(): void {
         for (let i = 0; i < this.juegos.length; i++) {
@@ -41,7 +43,8 @@ export class Casino {
     }
    public mostrarReglasGenerales(): string{
         return " Reglas Generales del Casino\nAcceso y Registro:\nPara acceder a nuestros juegos, debes tener al menos 18 años\nTodos los jugadores deben registrarse en la plataforma\nCuenta de Usuario:\nCada jugador es responsable de mantener la confidencialidad de sus credenciales de acceso.\nSolo se permite una cuenta por persona.\nDepósitos y Retiros:\nTodos los depósitos deben hacerse a través de métodos de pago autorizados en la plataforma.\nLos retiros están sujetos a verificaciones y pueden demorar hasta 48 horas hábiles."
-}
+ console.log('\x1b[33m-------------------------------------------------------------------------------------------------------------------\x1b[0m');
+    }
 }
 
 
