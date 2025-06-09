@@ -17,7 +17,7 @@ let edad = 0;
 let saldo = 0;//de inicio 0 para que ingrese al while de verificar saldo mayor o igual a 1000
 let nuevoSaldo = 0;
 
-const bingo_1 = new Bingo(3, "Bingo Estelar", saldo, 100)
+const bingo_1 = new Bingo("Bingo Estelar", saldo, 100)
 const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
 const fabricaTragamonedas = new TragamonedaFactory();
@@ -75,6 +75,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                 switch (opcion) {
                     case 1:
                         console.log(`${bingo_1.getNombreJuego()}`);
+                        bingo_1.mostrarReglas();
                         user.setSaldo(saldo);
                         saldo = user.getSaldo();
 
@@ -115,7 +116,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                         break;
 
                     case 2:
-                        console.log(`${myTragamoneda1.getNombreJuego()}`);
+                        console.log(`${myTragamoneda1.getNombreTragamoneda()}`);
                         user.setSaldo(saldo);
 
                         while (user.getSaldo() > 0) {
@@ -160,7 +161,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                         saldo = user.getSaldo();
                         break
                     case 3:
-                        console.log(`${myTragamoneda2.getNombreJuego()}`);
+                        console.log(`${myTragamoneda2.getNombreTragamoneda()}`);
                         user.setSaldo(saldo);
 
                         while (user.getSaldo() > 0) {

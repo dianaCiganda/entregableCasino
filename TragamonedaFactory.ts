@@ -2,7 +2,6 @@ import { ITragamonedas } from "./ITragamonedas";
 import { TragamonedaModerno } from "./TragamonedaModerno";
 import { TragamonedaTradicional } from "./TragamonedaTradicional";
 
-//imports
 export  class TragamonedaFactory {
     public  crearJuego(tipoDeJuego: string, atributos: any): ITragamonedas {
         if (tipoDeJuego === "Moderno") {

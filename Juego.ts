@@ -6,7 +6,7 @@ export abstract class Juego {
     constructor(pNombre_juego: string) {
         this.nombre_juego = pNombre_juego;
     }
-    getNombreJuego(): string {
+    public getNombreJuego(): string {
         return this.nombre_juego;
     }
     abstract cobrar(saldo: number): number;

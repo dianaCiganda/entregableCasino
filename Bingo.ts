@@ -4,7 +4,6 @@ export class Bingo extends Juego {
   private carton1: string[][];
   private carton2: string[][];
   private carton3: string[][];
-  private cantidadCartones: number;
   private costoPorBolilla: number = 100;
   private pozoAcumulado: number = 100000;
   private cartones: string[][][] = [];
@@ -12,9 +11,7 @@ export class Bingo extends Juego {
   private numerosCantados: number[] = [];
 
   constructor(
-    pCantidadCartones: number,
     pNombre_juego: string,
-    pSaldo: number,
     pCostoPorBolilla: number,
     pPozoAcumulado?: number,
     pCarton1?: string[][],
@@ -24,7 +21,6 @@ export class Bingo extends Juego {
     pNumerosCantados?: number[]
   ) {
     super(pNombre_juego);
-    this.cantidadCartones = pCantidadCartones;
     this.costoPorBolilla = pCostoPorBolilla;
     this.pozoAcumulado = pPozoAcumulado || this.pozoAcumulado;
     this.cartonEnJuego = pCartonEnJuego || null;
@@ -59,10 +55,8 @@ export class Bingo extends Juego {
     let pago: number = this.costoPorBolilla * 100 + this.costoPorBolilla;//10.000
     return pago
   }
-  cargarSaldo(): void {
-    throw new Error("Method not implemented.");
-  }
-  comenzarJuego(user: Usuario) {
+  
+  comenzarJuego(user: Usuario):void {
     if (user.getSaldo() >= this.costoPorBolilla) {
       console.log(`El valor de la bolilla es:  $${this.costoPorBolilla}`);
       const descuento = this.cobrar();

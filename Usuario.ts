@@ -65,21 +65,17 @@ export class Usuario extends Casino {
             inputUsuario = rs.question("Ingrese su nombre de usuario: ");
             inputContraseña = rs.question("Ingrese su contraseña: ", { hideEchoBack: true });
 
-            if (inputUsuario != this.usuario) {
-                console.log("Usuario incorrecto vuelva a ingresar los datos");
-
-            } else if (inputContraseña != this.contrasenia) {
-
-                console.log("contraseña incorrecta vuelva a ingresar los datos");
-            }
-            if (inputUsuario == this.usuario && inputContraseña == this.contrasenia) {
-
+            if (inputUsuario != this.usuario || inputContraseña != this.contrasenia) {
+                console.log("Usuario y/o contraseña incorrecto vuelva a ingresar los datos");
+                console.log('\x1b[33m--------------------------------------------\x1b[0m');
+             } else {
                 console.log("Acceso concedido");
+                console.log('\x1b[33m-------------------------\x1b[0m');
+                fs.appendFileSync('archivo.txt', '\n' + `Usuario: ` + (this.usuario) + ` ` + `Contraseña: ` + (this.contrasenia));
 
-            }
-        }
-        fs.appendFileSync('archivo.txt', '\n' + `Usuario: ` + (this.usuario) + ` ` + `Contraseña: ` + (this.contrasenia));
+            } 
     }
+}
 
     preguntarYRecargarSaldo(): number {
         const quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();

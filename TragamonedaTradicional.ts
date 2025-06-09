@@ -86,7 +86,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
         }
     }
-    mostrarTragamoneda(user: any):number {
+    mostrarTragamoneda(user:Usuario):number {
         // Crear arreglo con 9 símbolos aleatorios
         const contenido: string[] = [];
         while (contenido.length < 9) {
@@ -144,8 +144,8 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
         return user.getSaldo();
     }
 
-    getNombreJuego(): string {
-        return this.nombre_juego;
+    getNombreTragamoneda(): string {
+        return this.getNombreJuego();
     }
 getValorTiro():number{
     return this.valorDelTiro

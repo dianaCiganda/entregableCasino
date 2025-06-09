@@ -17,17 +17,17 @@ export class Raspadita extends Juego {
         this.simbolos = pSimbolos || this.simbolos;
         this.numeroMatriz = pNumeroMatriz || 0;
     }
-    cobrar(): number {
+   public cobrar(): number {
         let descontar: number = this.costoPorboleto;
         return descontar;
     }
-    pagar(): number {
+    public pagar(): number {
         let pago: number = this.costoPorboleto * 4;
         return pago
     }
 
     //preguntar porque no toma el tipo Usuario
-    comenzarJuego(user:Usuario): number {
+   public comenzarJuego(user:Usuario): number {
         if (user.getSaldo() >= this.costoPorboleto) {
             console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
 
@@ -130,14 +130,9 @@ export class Raspadita extends Juego {
             if (i < 3) {
                 console.log("----|----|----");
                 // Separador entre filas
-
             }
         }
         return user.getSaldo();// retorna el saldo con el descuento del cartón
-
-
     }
-
-
 }
 
