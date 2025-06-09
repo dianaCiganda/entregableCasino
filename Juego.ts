@@ -13,7 +13,7 @@ export abstract class Juego {
 
     abstract pagar(saldo: number): number;
 
-    public comenzarJuego(user:Usuario): void {
+     comenzarJuego(user:Usuario): void {
         console.log("comenzando juego");
 
     }

@@ -55,8 +55,8 @@ export class Bingo extends Juego {
     let pago: number = this.costoPorBolilla * 100 + this.costoPorBolilla;//10.000
     return pago
   }
-  
-  comenzarJuego(user: Usuario):void {
+
+  comenzarJuego(user: Usuario): void {
     if (user.getSaldo() >= this.costoPorBolilla) {
       console.log(`El valor de la bolilla es:  $${this.costoPorBolilla}`);
       const descuento = this.cobrar();
@@ -116,13 +116,13 @@ export class Bingo extends Juego {
       }
 
       if (lleno && contador <= 29) {
-        console.log("¡Cartón lleno! Usted gana el pozo acumulado de", this.pozoAcumulado);
+        console.log(`\x1b[32m¡Cartón lleno! Usted gana el pozo acumulado de ${this.pozoAcumulado}\x1b[0m`)
         user.actualizarSaldo(this.pozoAcumulado);
         this.cartonEnJuego = null;  // Reiniciar cartón SOLO si se llenó
         this.numerosCantados = []; // ← reinicia para una nueva partida
         contador = 0;
       } else if (lleno && contador > 29) {
-        console.log("¡Cartón lleno! Felicitaciones.");
+        console.log(`\x1b[32m¡Cartón lleno! \x1b[0m`);
         const premio: number = this.pagar();
         user.actualizarSaldo(premio)
         this.cartonEnJuego = null;  // Reiniciar cartón SOLO si se llenó

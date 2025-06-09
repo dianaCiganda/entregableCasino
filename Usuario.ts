@@ -68,20 +68,27 @@ export class Usuario extends Casino {
             if (inputUsuario != this.usuario || inputContraseña != this.contrasenia) {
                 console.log("Usuario y/o contraseña incorrecto vuelva a ingresar los datos");
                 console.log('\x1b[33m--------------------------------------------\x1b[0m');
-             } else {
+            } else {
                 console.log("Acceso concedido");
                 console.log('\x1b[33m-------------------------\x1b[0m');
                 fs.appendFileSync('archivo.txt', '\n' + `Usuario: ` + (this.usuario) + ` ` + `Contraseña: ` + (this.contrasenia));
 
-            } 
+            }
+        }
     }
-}
 
     preguntarYRecargarSaldo(): number {
-        const quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
-        if (quiereRecargar == "S") {
-            return this.recargarSaldo();
+        let quiereRecargar = "";
+        while (quiereRecargar != "S") {
+            quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
+            if (quiereRecargar == "S") {
+                return this.recargarSaldo();
+            }
+            else if (quiereRecargar == "N") {
+
+                break
+            }
         }
-        return 0;
+return 0;
     }
 }

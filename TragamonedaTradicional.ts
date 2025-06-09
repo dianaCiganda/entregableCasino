@@ -127,11 +127,8 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
             }
         }
         if (coincidencias == 1 || coincidencias == 2 || coincidencias == 3) {
-            console.log("🎉 Usted ha ganado!!!!!");
+           console.log("\x1b[32m🎉 Usted ha ganado!!!!!\x1b[0m");
             console.log("Saldo actualizado:", user.getSaldo());
-
-
-
         } else {
 
             console.log("😞 Usted ha perdido!!!!!");

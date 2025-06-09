@@ -103,7 +103,8 @@ export class Raspadita extends Juego {
         // si seleccionados que son los emojis coincide el valor elegido, gana
         const valorElegido = contenido[this.numeroMatriz - 1];//le resto uno al numero ingresado para trabajar en posiciones
         if (emojis.includes(valorElegido)) {//devuelve true si esta incluido
-            console.log(`🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${valorElegido}`);
+          console.log(`\x1b[32m🎉 ¡Felicidades! Has raspado la casilla ${this.numeroMatriz} y\nganaste con el símbolo: ${valorElegido}\x1b[0m`);
+
 
             const premio: number = this.pagar();
             user.actualizarSaldo(premio); // actualiza saldo al ganar
