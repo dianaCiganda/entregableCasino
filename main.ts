@@ -73,11 +73,11 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                 switch (opcion) {
                     case 1:
-                        let nuevoSaldo=0;
+                        let nuevoSaldo = 0;
                         console.log(`${bingo_1.getNombreJuego()}`);
                         bingo_1.mostrarReglas();
                         user.setSaldo(saldo);
-                        saldo = user.getSaldo();
+                        // saldo = user.getSaldo();
 
                         while (user.getSaldo() >= 100) {
                             console.log(`Saldo actual: ${user.getSaldo()}`);
@@ -87,13 +87,11 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                             if (user.getSaldo() < 100) {
                                 console.log("\x1b[31mSaldo insuficiente para jugar otra vez.\x1b[0m");
-
-                                 nuevoSaldo = user.preguntarYRecargarSaldo();
-                                console.log("nuevo saldo", nuevoSaldo);
-
+                                nuevoSaldo = user.preguntarYRecargarSaldo();
                                 if (nuevoSaldo > 0) {
-                                    saldo = nuevoSaldo;
-                                    user.setSaldo(saldo);
+                                    user.actualizarSaldo(nuevoSaldo);
+                                    console.log("Saldo actualizado:", user.getSaldo());
+                                    console.log('\x1b[33m-------------------------\x1b[0m');
                                 } else {
                                     break;
                                 }
@@ -233,11 +231,9 @@ if (!casino_1.estaCerrado(horaActual)) {
                                 console.log("\x1b[31mSaldo insuficiente para jugar otra vez.\x1b[0m");
 
                                 nuevoSaldo3 = user.preguntarYRecargarSaldo();
-                                console.log("nuevo saldo", nuevoSaldo3);
 
                                 if (nuevoSaldo3 > 0) {
-                                    saldo = nuevoSaldo3;
-                                    user.setSaldo(saldo);
+                                    user.actualizarSaldo(nuevoSaldo3);
                                 } else {
                                     break;
                                 }

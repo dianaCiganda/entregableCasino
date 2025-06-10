@@ -4,7 +4,7 @@ import * as rs from 'readline-sync';
 import { Usuario } from './Usuario';
 export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
-    private emojiSuerte: string[] = [];
+    private emojiSuerte: string[] = ["🍀", "🐞", "🧿", "🧧", "🔮", "🐘"];
     private tipoDeJuego: string = "Tradicional";
     private valorDelTiro: number =800;
     private apuestaMinima:number=400;
@@ -13,7 +13,6 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
 
         super(pNombre_juego)
         this.tipoDeJuego = pTipoDeJuego || this.tipoDeJuego;
-        this.emojiSuerte = ["🍀", "🐞", "🧿", "🧧", "🔮", "🐘"];
         this.valorDelTiro = pValorDelTiro || this.valorDelTiro;
         this.apuestaMaxima=pApuestaMaxima || this.apuestaMaxima;
         this.apuestaMinima=pApuestaMinima || this.apuestaMinima;
@@ -30,7 +29,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
     }
 
     cobrar(): number {
-        let descontar: number = this.valorDelTiro
+        let descontar: number = -this.valorDelTiro
         return descontar;
     }
     pagar(): number {
@@ -42,7 +41,7 @@ export class TragamonedaTradicional extends Juego implements ITragamonedas {
             console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
 
             const descuento = this.cobrar();
-            user.actualizarSaldo(-descuento); 
+            user.actualizarSaldo(descuento); 
 
             this.mostrarTragamoneda(user);
         }

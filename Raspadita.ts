@@ -10,15 +10,14 @@ export class Raspadita extends Juego {
         [4, 5, 6],
         [7, 8, 9]
     ];
-    constructor(pCostoPorboleto: number, pNombre_juego: string, pSaldo: number, pSimbolos?: string[], pMatriz?: number[][], pNumeroMatriz?: number) {
+    constructor(pCostoPorboleto: number, pNombre_juego: string, pSaldo: number, pMatriz?: number[][], pNumeroMatriz?: number) {
         super(pNombre_juego);
         this.costoPorboleto = pCostoPorboleto;
         this.matriz = pMatriz || this.matriz;
-        this.simbolos = pSimbolos || this.simbolos;
         this.numeroMatriz = pNumeroMatriz || 0;
     }
    public cobrar(): number {
-        let descontar: number = this.costoPorboleto;
+        let descontar: number = -this.costoPorboleto;
         return descontar;
     }
     public pagar(): number {
@@ -26,18 +25,20 @@ export class Raspadita extends Juego {
         return pago
     }
 
-    //preguntar porque no toma el tipo Usuario
+    //Comienza el juego este método recibe por parámetro el usuario
    public comenzarJuego(user:Usuario): number {
-        if (user.getSaldo() >= this.costoPorboleto) {
+        if (user.getSaldo() >= this.costoPorboleto) {//Comprobación para permitir Jugar
             console.log(`El valor de la raspadita es $${this.costoPorboleto}`);
 
             const descuento = this.cobrar();
-            user.actualizarSaldo(-descuento); // descontar costo del boleto
+            //declaramos una constate descuento y le asignamos el retorno de cobrar()
+            user.actualizarSaldo(descuento); // descontar costo del boleto
             this.mostrarCarton();
 
-            this.numeroMatriz = -1;
+            this.numeroMatriz = -1;//inicializamos en -1 que es una posicion no válida para un array, para entrar al while primera vez
             while (this.numeroMatriz < 1 || this.numeroMatriz > 9) {
                 this.numeroMatriz = rs.questionInt("Ingrese el número a raspar (1-9): ");
+                //el usuario debe ingresar del 1-9 para continuar
             }
 
             console.log(`Usted eligió el número ${this.numeroMatriz}`);

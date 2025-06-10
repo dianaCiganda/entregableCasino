@@ -3,7 +3,7 @@ import { ITragamonedas } from "./ITragamonedas.js";
 import { Usuario } from './Usuario';
 import * as rs from 'readline-sync';
 export class TragamonedaModerno extends Juego implements ITragamonedas {
-     private emojiSuerte: string[] = [];
+     private emojiSuerte: string[] = ["🌟", "💎", "🌈", "🕊️", "🧸"];
         private tipoDeJuego: string = "Moderno";
         private valorDelTiro: number = 1000;
         private apuestaMinima:number=500;
@@ -12,45 +12,44 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     
             super(pNombre_juego)
             this.tipoDeJuego = pTipoDeJuego || this.tipoDeJuego;
-            this.emojiSuerte = ["🌟", "💎", "🌈", "🕊️", "🧸"];
             this.valorDelTiro = pValorDelTiro || this.valorDelTiro;
             this.apuestaMaxima=pApuestaMaxima || this.apuestaMaxima;
             this.apuestaMinima=pApuestaMinima || this.apuestaMinima;
             
     
         }
-        subirApuesta(): number {
+       public subirApuesta(): number {
             let subir: number = this.valorDelTiro + this.apuestaMinima;
             return subir
         }
-        bajarApuesta(): number {
+       public bajarApuesta(): number {
             let bajar: number = this.valorDelTiro - this.apuestaMinima;
             return bajar
         }
     
-        cobrar(): number {
-            let descontar: number = this.valorDelTiro
+      public cobrar(): number {
+            let descontar: number = -this.valorDelTiro
             return descontar;
         }
-        pagar(): number {
+      public  pagar(): number {
             let pago: number = this.valorDelTiro * 10 + this.valorDelTiro;
             return pago
         }
-        girar(user:Usuario):number {
-            if (user.getSaldo() >=this.valorDelTiro) {
+      public  girar(user:Usuario):number {
+            if (user.getSaldo() >=this.valorDelTiro) {//Si se cumple juega, descuenta el valor del tiro y lo guarda en descuento y actualiza el saldo
                 console.log(`El valor del tiro de la tragamoneda es $${this.valorDelTiro}`);
     
                 const descuento = this.cobrar();
-                user.actualizarSaldo(-descuento); 
+                user.actualizarSaldo(descuento); 
     
-                this.mostrarTragamoneda(user);
+                this.mostrarTragamoneda(user);//muestra el tragamoneda con símbolos aleatorios
             }
     
             return user.getSaldo();
         }
     
-        modificarApuesta(user:Usuario): void {
-            let modificarApuesta: string = ""
+      public  modificarApuesta(user:Usuario): void {
+            let modificarApuesta: string = "";
             while (modificarApuesta != "S" && modificarApuesta != "B" && modificarApuesta!="C") {
                 modificarApuesta = rs.question("Ingrese: \n(S) Para subir apuesta\n(B) Para bajar apuesta\n(C) Para cargar saldo\n(J) Para jugar: ").toUpperCase()
                 if (modificarApuesta == "S") {
@@ -73,9 +72,9 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     
                 }else if(modificarApuesta=="C") {
                     
-               let saldoAsumar= user.recargarSaldo();//antes preguNtaryrecargar
+               let saldoAsumar= user.recargarSaldo();
                
-                user.setSaldo(saldoAsumar+user.getSaldo())
+                user.setSaldo(saldoAsumar+user.getSaldo()); //si hay saldo residual se lo suma al saldo recargado
                 }
                 else if(modificarApuesta=="J") {
                     this.girar(user)
@@ -85,7 +84,7 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
     
             }
         }
-        mostrarTragamoneda(user: Usuario):number {
+       public mostrarTragamoneda(user: Usuario):number {
             // Crear arreglo con 16 símbolos aleatorios
             const contenido: string[] = [];
             while (contenido.length < 16) {
@@ -103,6 +102,8 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
             const matriz: string[][] = [];
             for (let i = 0; i < 4; i++) {
                 matriz.push(contenido.slice(i * 4, (i + 1) * 4));
+                //está tomando fragmentos de un array o string llamado contenido y los está agrupando de a 4 elementos para formar una matriz (arreglo bidimensional)
+                //contenido.slice(...): toma una porción de 4 elementos (o caracteres).
             }
     
             // Mostrar la matriz con separadores
@@ -118,7 +119,7 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
             let coincidencias: number = 0;
             for (let i = 0; i < 4; i++) {
                 const fila = matriz[i];
-                if (fila[0] === fila[1] && fila[1] === fila[2] && fila[2]===fila[3]) {
+                if (fila[0] == fila[1] && fila[1] == fila[2] && fila[2]==fila[3]) {
                     const premio: number = this.pagar();
                     user.actualizarSaldo(premio); // actualiza saldo al ganar
     
@@ -140,10 +141,10 @@ export class TragamonedaModerno extends Juego implements ITragamonedas {
             // this.modificarApuesta(user);
             return user.getSaldo();
         }
-        getNombreTragamoneda(): string {
+       public getNombreTragamoneda(): string {
         return this.getNombreJuego();
     }
-    getValorTiro():number{
+   public getValorTiro():number{
         return this.valorDelTiro
     }
     }

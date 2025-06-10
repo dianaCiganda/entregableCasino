@@ -15,8 +15,9 @@ export class Usuario extends Casino {
         this.saldo = pSaldo || this.saldo
     }
 
-    recargarSaldo(): number {
+   public  recargarSaldo(): number {
         let saldoAux = 0;
+        //declaramos una variable aux para poder entrar al while la primera vuelta, esa variable se vuelve el saldo que ingresa el usuario que debe ser mayor o igual a 1000, sino sigue pidiendo el ingreso,retorna el saldo cuando es mayor o igual a 1000
         while (saldoAux < 1000) {
             console.log("El monto mínimo a recargar es $1000.");
             saldoAux = rs.questionInt("Ingrese el monto que desea recargar: ");
@@ -24,20 +25,21 @@ export class Usuario extends Casino {
         return saldoAux;
     }
 
-    getSaldo(): number {
+   public getSaldo(): number {
         return this.saldo;
-    }
+    }//Retorna el saldo
 
 
-    actualizarSaldo(monto: number): number {
+   public actualizarSaldo(monto: number): number {
         return this.saldo += monto;
-    }
+    }//Retorna el saldo + un saldo residual
 
-    setSaldo(nuevoSaldo: number): void {
+    public setSaldo(nuevoSaldo: number): void {
         this.saldo = nuevoSaldo;
+        //NO retorna nada pero actualiza el saldo al nuevoSaldo pasado por parametro
 
     }
-    usuarioRandom(): void {
+   public  usuarioRandom(): void {
 
         // Generar un usuario y contraseña aleatorios
         this.usuario = "user_" + Math.floor(Math.random() * 1000);
@@ -59,7 +61,7 @@ export class Usuario extends Casino {
 
         let inputUsuario: string = "";
         let inputContraseña: string = "";
-        // Pedir al usuario que ingrese sus datos
+        // Pedir usuario y o contraseña correctos, sino ingresa correctos vuelve a pedir los 2 y entra en bucle, se inicializan usuario y contraseña en vacio para que entre primera vuelta al while.
 
         while (inputUsuario != this.usuario || inputContraseña != this.contrasenia) {
             inputUsuario = rs.question("Ingrese su nombre de usuario: ");
@@ -72,13 +74,14 @@ export class Usuario extends Casino {
                 console.log("Acceso concedido");
                 console.log('\x1b[33m-------------------------\x1b[0m');
                 fs.appendFileSync('archivo.txt', '\n' + `Usuario: ` + (this.usuario) + ` ` + `Contraseña: ` + (this.contrasenia));
+                //Se colocó en esta linea el fs para que solo guarde los usuarios y/o contrseñas ingresados correctamente.
 
             }
         }
     }
 
-    preguntarYRecargarSaldo(): number {
-        let quiereRecargar = "";
+   public  preguntarYRecargarSaldo(): number {
+        let quiereRecargar = "";//Para ingrsar por primera vez al while
         while (quiereRecargar != "S") {
             quiereRecargar = rs.question("¿Desea recargar saldo? (S/N): ").toUpperCase();
             if (quiereRecargar == "S") {
@@ -91,4 +94,5 @@ export class Usuario extends Casino {
         }
 return 0;
     }
+    //Este método pregunta si desea recargar saldo si es S llama al método recargarSaldo y lo retorna si es N sale de este bucle, sino recarga retorna 0
 }
