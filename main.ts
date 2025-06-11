@@ -2,7 +2,6 @@ import { Bingo } from "./Bingo";
 import { Casino } from "./Casino";
 import * as rs from 'readline-sync';
 import { Raspadita } from "./Raspadita";
-import { ITragamonedas } from "./ITragamonedas";
 import { TragamonedaFactory } from "./TragamonedaFactory";
 import { Usuario } from "./Usuario";
 function obtenerHoraActual(): number {
@@ -12,15 +11,16 @@ function obtenerHoraActual(): number {
     //se deja solo las horas por practicidad pero se puede agregar minutos y segundos si se desea
 }
 let horaActual = obtenerHoraActual();
-let salir = "";
-let edad = 0;
+//guardamos lo que retorna el método obtenerHoraActual()
+let salir = ""; //Inicializado en distinto de "X", para que no se salga del programa
+let edad = 0;//Para que ingrese primera vuelta al while
 let saldo = 0;//de inicio 0 para que ingrese al while de verificar saldo mayor o igual a 1000
 
-
+//Instanciamos los juegos y el casino y el user (a éstos últimos 2 le pasamos el arreglo de juegos vacio que luego vamos a ir completando con el método correspondiente)
 const bingo_1 = new Bingo("Bingo Estelar", 100)
 const raspadita_1 = new Raspadita(500, "Raspadita Gold", saldo);
 const casino_1 = new Casino("Corona de Ases", "Juan Gomez", []);
-const fabricaTragamonedas = new TragamonedaFactory();
+const fabricaTragamonedas = new TragamonedaFactory();//Acá aplicamos patrón de diseño Factory
 let user = new Usuario("user_123", "kajjkaja", "Casino", "Rafael Gomez", []);
 
 const myTragamoneda1 = fabricaTragamonedas.crearJuego("Tradicional", {
@@ -38,12 +38,12 @@ const myTragamoneda2 = fabricaTragamonedas.crearJuego("Moderno", {
     valorDelTiro: 1000,
     tipoDeJuego: "Tradicional"
 });
-
+//Agregamos los juegos al casino
 casino_1.agregarJuego(bingo_1);
 casino_1.agregarJuego(myTragamoneda1);
 casino_1.agregarJuego(myTragamoneda2);
 casino_1.agregarJuego(raspadita_1);
-
+//Si el casino está abierto y la edad esta dentro del rango permitido, se concede el acceso al casino
 if (!casino_1.estaCerrado(horaActual)) {
     console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
     while (edad < 18 || edad > 99) {
@@ -51,20 +51,20 @@ if (!casino_1.estaCerrado(horaActual)) {
         if (edad < 18 || edad > 99) {
             console.log("No esta permitido el ingreso de menores de 18 años");
         }
-        user.usuarioRandom();
+        user.usuarioRandom();//Pedimos el logueo al usuario
         console.log(casino_1.mostrarReglasGenerales());
-        casino_1.mostrarMensaje();
-        saldo = user.recargarSaldo();
+        casino_1.mostrarMensaje();//mensaje de bienvenida
+        saldo = user.recargarSaldo();//pedimos al usuario un saldo >=1000
 
         while (salir !== "X") {
             salir = rs.question("Presione 'X' para salir o cualquier otra tecla para continuar: ").toUpperCase();
 
-            if (salir !== "X") {
+            if (salir !== "X") {//si desea continuar
                 if (saldo >= 1000) {
                     console.log(`Su saldo actual es: $${saldo}`);
                 }
 
-                casino_1.menuOpciones();
+                casino_1.menuOpciones();//mostramos menu opciones(lista de juegos)
 
                 let opcion = 0;
                 while (opcion < 1 || opcion > 4) {
@@ -76,20 +76,19 @@ if (!casino_1.estaCerrado(horaActual)) {
                         let nuevoSaldo = 0;
                         console.log(`${bingo_1.getNombreJuego()}`);
                         bingo_1.mostrarReglas();
-                        user.setSaldo(saldo);
-                        // saldo = user.getSaldo();
-
-                        while (user.getSaldo() >= 100) {
+                        user.setSaldo(saldo);//muestra saldo del usuario
+                        while (user.getSaldo() >= 100) {//get  retorna el saldo y lo compara con el costo de la  bolilla
                             console.log(`Saldo actual: ${user.getSaldo()}`);
-                            bingo_1.comenzarJuego(user);
+                            bingo_1.comenzarJuego(user);//comenzamos a jugar
                             console.log(`Saldo actualizado: ${user.getSaldo()}`);
-                            console.log('\x1b[33m-------------------------\x1b[0m');
+                            console.log('\x1b[33m-------------------------\x1b[0m');//guiones con color amarillo
 
                             if (user.getSaldo() < 100) {
-                                console.log("\x1b[31mSaldo insuficiente para jugar otra vez.\x1b[0m");
+                                console.log("\x1b[31mSaldo insuficiente para jugar otra vez.\x1b[0m");//texto en color rojo
                                 nuevoSaldo = user.preguntarYRecargarSaldo();
+                                //preguntamos si desea recargar y lo guardamos en nuevoSaldo
                                 if (nuevoSaldo > 0) {
-                                    user.actualizarSaldo(nuevoSaldo);
+                                    user.actualizarSaldo(nuevoSaldo);//nos devuelve el monto que teníamos anteriormente + la recarga
                                     console.log("Saldo actualizado:", user.getSaldo());
                                     console.log('\x1b[33m-------------------------\x1b[0m');
                                 } else {
@@ -110,7 +109,7 @@ if (!casino_1.estaCerrado(horaActual)) {
                                 break;
                             }
                         }
-                        saldo = user.getSaldo();
+                        saldo = user.getSaldo();//actualizamos el saldo para que lo pueda utilizar en el mismo u otro juego
                         break;
 
                     case 2:
@@ -124,7 +123,7 @@ if (!casino_1.estaCerrado(horaActual)) {
 
                             if (user.getSaldo() < myTragamoneda1.getValorTiro() || user.getSaldo() == 0) {
                                 console.log("\x1b[31mSaldo insuficiente para jugar otra vez.\x1b[0m");
-                                myTragamoneda1.modificarApuesta(user);
+                                myTragamoneda1.modificarApuesta(user);//a diferencia de lo anterior podemos, subir, bajar apuesta o cargar saldo, independientemente de que si tenemos saldo insufieciente o no
                                 nuevoSaldo1 = user.preguntarYRecargarSaldo();
 
                                 if (nuevoSaldo1 > 0) {
