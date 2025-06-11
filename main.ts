@@ -4,6 +4,9 @@ import * as rs from 'readline-sync';
 import { Raspadita } from "./Raspadita";
 import { TragamonedaFactory } from "./TragamonedaFactory";
 import { Usuario } from "./Usuario";
+import * as fs from 'fs';
+import { OpcionInvalida } from "./OpcionInvalida";
+
 function obtenerHoraActual(): number {
     const ahora = new Date();
     const horas = ahora.getHours();
@@ -67,8 +70,13 @@ if (!casino_1.estaCerrado(horaActual)) {
                 casino_1.menuOpciones();//mostramos menu opciones(lista de juegos)
 
                 let opcion = 0;
-                while (opcion < 1 || opcion > 4) {
-                    opcion = rs.questionInt("Seleccione una opción (1-4): ");
+                try {
+                    while (opcion < 1 || opcion > 4) {
+                        opcion = rs.questionInt("Seleccione una opción (1-4): ");
+                        throw new OpcionInvalida();
+                    }
+                } catch (error) {
+                    console.error("Ocurrió un error al seleccionar una opción:",(error as OpcionInvalida).name);
                 }
 
                 switch (opcion) {
@@ -254,10 +262,11 @@ if (!casino_1.estaCerrado(horaActual)) {
                         }
                         saldo = user.getSaldo();
                         break;
+                    }
+                    console.log(`Gracias por jugar a Casino: ${casino_1.getNombre()}`);
                 }
-                console.log(`Gracias por jugar a Casino: ${casino_1.getNombre()}`);
             }
-        }
+            fs.appendFileSync('saldo.txt', '\n' + `Su saldo acumulado es ` + saldo);
     }
 } else {
     console.log(`El casino está cerrado, la hora actual es: ${horaActual}`);
