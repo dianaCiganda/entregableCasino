@@ -16,7 +16,6 @@ function obtenerHoraActual(): number {
 let horaActual = obtenerHoraActual();
 //guardamos lo que retorna el método obtenerHoraActual()
 let salir = ""; //Inicializado en distinto de "X", para que no se salga del programa
-let edad = 0;//Para que ingrese primera vuelta al while
 let saldo = 0;//de inicio 0 para que ingrese al while de verificar saldo mayor o igual a 1000
 
 //Instanciamos los juegos y el casino y el user (a éstos últimos 2 le pasamos el arreglo de juegos vacio que luego vamos a ir completando con el método correspondiente)
@@ -49,8 +48,8 @@ casino_1.agregarJuego(raspadita_1);
 //Si el casino está abierto y la edad esta dentro del rango permitido, se concede el acceso al casino
 if (!casino_1.estaCerrado(horaActual)) {
     console.log(`El casino está abierto, la hora actual es: ${horaActual}`);
-    while (edad < 18 || edad > 99) {
-        edad = rs.questionInt("Ingrese su edad: ");
+  
+       let edad = rs.questionInt("Ingrese su edad: ");
         if (edad < 18 || edad > 99) {
             console.log("la edad ingresada no es válida, debe ser mayor a 18 y menor a 99");
          
@@ -271,7 +270,7 @@ if (!casino_1.estaCerrado(horaActual)) {
             fs.appendFileSync('saldo.txt', '\n' + `Su saldo acumulado es ` + saldo);
         }
     }
-    } else {
+     else {
         console.log(`El casino está cerrado, la hora actual es: ${horaActual}`);
         
     }
